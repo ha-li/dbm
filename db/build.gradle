@@ -1,0 +1,14 @@
+// ONLY custom constraints and their validator class in this subproject.
+// NOTHING ELSE, other wise it messes up the compilation dependencies.
+// IF YOU NEED to add another jar dependency besides the validation api,
+// then its a good chance you are doing something wrong.
+description = 'Custom Constraints'
+
+repositories {
+   mavenCentral ()
+}
+
+dependencies {
+   // compile project (':json')
+   compile 'javax.validation:validation-api:1.1.0.Final'
+}
