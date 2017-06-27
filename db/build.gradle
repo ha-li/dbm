@@ -12,3 +12,23 @@ dependencies {
    // compile project (':json')
    compile 'javax.validation:validation-api:1.1.0.Final'
 }
+
+task deployDb (type: Exec) {
+   commandLine './installer.sql'
+   standardOutput = new ByteArrayOutputStream ()
+   ext.output = {
+      return standardOutput.toString ()
+   }
+}
+
+task installDb {
+   doLast {
+      def sqlPlusCmd = "/Applications/oracle/instantclient_12_1/bin/sqlplus subadm/subadm@//localhost:1521/xe @dbcr/install-db.sql".execute()
+      sqlPlusCmd.in.eachLine { line -> print line }
+   }
+}
+
+task cmdDb (type: Exec) {
+   commandLine 'export', 'DYLD_LIBRARY_PATH=/Applications/oracle/instantclient_12_1/lib'
+   commandLine 'sh', '-c', '/Applications/oracle/instantclient_12_1/bin/sqlplus', 'subadm/subadm@localhost:1521/xe', '@dbcr/install-db.sql'
+}
