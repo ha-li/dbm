@@ -11,7 +11,7 @@ set verify off
 set serveroutput on
 set termout off
 
-spool 'Install.log' append;
+spool 'InstallDB.log' append;
 
 prompt
 prompt ==============================================
@@ -19,7 +19,7 @@ prompt 1. Decide if it is a new install or an upgrade
 prompt ==============================================
 
 select
-  case when exists (select * from user_objects) then '@@dbcr/install-db.sql'
+  case when exists (select * from user_objects) then '@@dbcr/InstallDB.sql'
   else '@@dbcm/create-db.sql'
   end
 from dual;

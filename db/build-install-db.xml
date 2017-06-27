@@ -1,0 +1,37 @@
+<project name="install-db" basedir="." default="all">
+
+    <condition property="dbUserNameSet">
+        <isset property="dbUserName"/>
+    </condition>
+
+    <target name="setDbUserName" unless="dbUserNameSet">
+        <echo message="setting user name"/>
+        <property name="dbUserName" value="subadm"/>
+        <echo message="${dbUserName}"/>
+    </target>
+
+    <condition property="dbSQLPlusConnectionSet">
+        <isset property="dbSQLPlusConnection"/>
+    </condition>
+
+    <target name="setDbSQLPlusConnection" unless="dbSQLPlusConnectionSet">
+        <echo message="setting sqlplus connection"/>
+        <property name="dbSQLPlusConnection" value="localhost:1521/xe"/>
+        <echo message="${dbSQLPlusConnection}"/>
+    </target>
+
+    <target name="configureDBProperties" depends="setDbUserName, setDbSQLPlusConnection"/>
+
+    <target name="sqlplusexe" depends="configureDBProperties" unless="doNotRunDBInstall">
+        <property environment="env"/>
+        <echo message="$PATH: ${env.PATH}"/>
+        <echo message="Doing a database install" />
+        <property name="install_db_params" value="NONE NONE NONE NONE NONE local"/>
+
+        <echo message=" ${dbUserName}/${dbUserName}@${dbSQLPlusConnection} @InstallDB.sql "/>
+        <exec dir="dbcr" executable="/Applications/oracle/instantclient_12_1/sqlplus" failonerror="true" osfamily="unix">
+            <arg line=" ${dbUserName}/${dbUserName}@${dbSQLPlusConnection} @InstallDB.sql "/>
+        </exec>
+    </target>
+
+</project>

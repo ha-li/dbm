@@ -1,7 +1,4 @@
-// ONLY custom constraints and their validator class in this subproject.
-// NOTHING ELSE, other wise it messes up the compilation dependencies.
-// IF YOU NEED to add another jar dependency besides the validation api,
-// then its a good chance you are doing something wrong.
+
 description = 'Custom Constraints'
 
 repositories {
@@ -9,26 +6,33 @@ repositories {
 }
 
 dependencies {
-   // compile project (':json')
-   compile 'javax.validation:validation-api:1.1.0.Final'
 }
 
-task deployDb (type: Exec) {
+String basedir = project.getProjectDir ().getAbsolutePath()
+
+// these two go together
+ant.importBuild basedir + "/build-install-db.xml"
+task installDatabase(dependsOn: sqlplusexe){}
+
+// investigate more - maybe works
+/* task deployDb (type: Exec) {
    commandLine './installer.sql'
    standardOutput = new ByteArrayOutputStream ()
    ext.output = {
       return standardOutput.toString ()
    }
-}
+} */
 
-task installDb {
+// does not work
+/* task installDb {
    doLast {
-      def sqlPlusCmd = "/Applications/oracle/instantclient_12_1/bin/sqlplus subadm/subadm@//localhost:1521/xe @dbcr/install-db.sql".execute()
-      sqlPlusCmd.in.eachLine { line -> print line }
+      //def sqlPlusCmd = "/Applications/oracle/instantclient_12_1/bin/sqlplus subadm/subadm@//localhost:1521/xe @dbcr/InstallDB.sql".execute()
+      //sqlPlusCmd.in.eachLine { line -> print line }
    }
-}
+} */
 
-task cmdDb (type: Exec) {
+// does not work
+/* task cmdDb (type: Exec) {
    commandLine 'export', 'DYLD_LIBRARY_PATH=/Applications/oracle/instantclient_12_1/lib'
-   commandLine 'sh', '-c', '/Applications/oracle/instantclient_12_1/bin/sqlplus', 'subadm/subadm@localhost:1521/xe', '@dbcr/install-db.sql'
-}
+   commandLine 'sh', '-c', '/Applications/oracle/instantclient_12_1/bin/sqlplus', 'subadm/subadm@localhost:1521/xe', '@dbcr/InstallDB.sql'
+} */
