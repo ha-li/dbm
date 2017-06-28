@@ -22,15 +22,47 @@
 
   prompt
   prompt ========================================
-  prompt Step 1. Create Tables
+  prompt Step 1. Determine whether Create or Update Tables
   prompt ========================================
   prompt
 
-  @createTables.sql
+  spool off
+
+  set termout off
+  set heading off
+  spool createOrUpdateDB.sql
+
+  select
+     case when exists (select * from user_objects) then '@dbUpgrade.sql'
+     else '@createTables.sql'
+     end
+  from dual;
+
+  spool off
+  set termout on
+  set heading on
+
+  spool InstallDB.log append
 
   prompt
   prompt ========================================
-  prompt Step 1. Create Tables
+  prompt Step 2. Create/Update database
+  prompt ========================================
+  prompt
+
+  @createOrUpdateDB.sql
+
+  prompt
+  prompt ========================================
+  prompt Step 2. System Parameters
+  prompt ========================================
+  prompt
+
+  @systemparameter.sql
+
+  prompt
+  prompt ========================================
+  prompt Step 3. Post DB Install
   prompt ========================================
   prompt
 
