@@ -1,6 +1,11 @@
 <project name="custom_sqlplus" basedir="." default="all">
 
-    <!-- do not check your copy of this file in -->
+    <!--
+        DO NOT check your copy of this file in.
+        Once you have cloned the repo, run the following command in you cmd/shell
+         PROMPT$> git update-index --assume-unchanged  the/path/to/file/custom_sqlplus.xml
+     -->
+
     <target name="dbSQLPlusExe" unless="dbSQLPlusExeSet">
         <echo message="setting sqlplus exe path"/>
         <property name="dbSQLPlusExe" value="/Applications/oracle/instantclient_12_1/sqlplus"/>
