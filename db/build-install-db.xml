@@ -1,4 +1,5 @@
 <project name="install-db" basedir="." default="all">
+    <include file="${basedir}/custom_sqlplus.xml" as="nested"/>
 
     <condition property="dbUserNameSet">
         <isset property="dbUserName"/>
@@ -20,7 +21,7 @@
         <echo message="${dbSQLPlusConnection}"/>
     </target>
 
-    <target name="configureDBProperties" depends="setDbUserName, setDbSQLPlusConnection"/>
+    <target name="configureDBProperties" depends="nested.dbSQLPlusExe, setDbUserName, setDbSQLPlusConnection"/>
 
     <target name="sqlplusexe" depends="configureDBProperties" unless="doNotRunDBInstall">
         <property environment="env"/>
@@ -29,7 +30,7 @@
         <property name="install_db_params" value="NONE NONE NONE NONE NONE local"/>
 
         <echo message=" ${dbUserName}/${dbUserName}@${dbSQLPlusConnection} @InstallDB.sql "/>
-        <exec dir="dbcr" executable="/Applications/oracle/instantclient_12_1/sqlplus" failonerror="true" osfamily="unix">
+        <exec dir="dbcr" executable="${dbSQLPlusExe}" failonerror="true" osfamily="unix">
             <arg line=" ${dbUserName}/${dbUserName}@${dbSQLPlusConnection} @InstallDB.sql "/>
         </exec>
     </target>

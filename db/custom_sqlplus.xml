@@ -1,0 +1,9 @@
+<project name="custom_sqlplus" basedir="." default="all">
+
+    <!-- do not check your copy of this file in -->
+    <target name="dbSQLPlusExe" unless="dbSQLPlusExeSet">
+        <echo message="setting sqlplus exe path"/>
+        <property name="dbSQLPlusExe" value="/Applications/oracle/instantclient_12_1/sqlplus"/>
+        <echo message="${dbSQLPlusExe}"/>
+    </target>
+</project>

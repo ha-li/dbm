@@ -1,4 +1,4 @@
-declare
+  declare
        table_exists pls_integer;
   begin
 
