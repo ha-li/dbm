@@ -1,4 +1,4 @@
 .idea/
 .gradle/
-dbm.iml
+*.iml
 InstallDB.log

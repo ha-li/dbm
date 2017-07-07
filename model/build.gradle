@@ -1,0 +1,11 @@
+description = 'data modeling'
+
+repositories {
+   mavenCentral ()
+}
+
+dependencies {
+   compile 'org.hibernate:hibernate-entitymanager:5.0.0.Final'
+
+   testCompile 'junit:junit:4.12'
+}
