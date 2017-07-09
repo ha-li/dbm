@@ -6,7 +6,7 @@ import java.util.Properties;
 /**
  * Created by hlieu on 07/8/17.
  */
-public enum DatabaseProduct {
+public enum Database {
 
    ORACLE (
            new DataSourceConfiguration () {
@@ -30,8 +30,8 @@ public enum DatabaseProduct {
    public DataSourceConfiguration configuration;
    public String hibernateDialect;
 
-   private DatabaseProduct (DataSourceConfiguration configuration,
-                            String hibernateDialect)
+   private Database (DataSourceConfiguration configuration,
+                     String hibernateDialect)
    {
       this.configuration = configuration;
       this.hibernateDialect = hibernateDialect;
