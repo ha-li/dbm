@@ -9,12 +9,12 @@ import javax.persistence.Id;
  */
 @Entity (name="SUB_MESSAGES")
 public class Message {
+
    @Id
    @GeneratedValue
    private Long id;
 
    private String text;
-
 
    public Long getId () {
       return id;
@@ -31,7 +31,4 @@ public class Message {
    public void setText (String text) {
       this.text = text;
    }
-
-
-
 }

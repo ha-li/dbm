@@ -12,13 +12,14 @@ public enum Database {
            new DataSourceConfiguration () {
               @Override
               public void configure (PoolingDataSource ds, String connectionUrl) {
-                 ds.setClassName ("oracle.jdbc.xa.client.OracleXADataSource");
+                 ds.setClassName ( oracle.jdbc.xa.client.OracleXADataSource.class.getName() );
                  ds.getDriverProperties().put (
                          "URL",
                          connectionUrl != null
                             ? connectionUrl :
                             "jdbc:oracle:thin:subadm/subadm@localhost:1521/xe"
                  );
+
                  Properties connectionProperties = new Properties();
                  connectionProperties.put("useFetchSizeWithLongColumn", "true");
                  ds.getDriverProperties().put("connectionProperties", connectionProperties);
