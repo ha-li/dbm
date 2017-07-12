@@ -26,25 +26,15 @@ public class TransactionManagerSetup {
 
    public TransactionManagerSetup (Database database,
                                    String connectionUrl) throws Exception {
+
       TransactionManagerServices.getConfiguration().setServerId ("myServer1234");
-
       TransactionManagerServices.getConfiguration().setDisableJmx (true);
-
       TransactionManagerServices.getConfiguration().setJournal ("null");
-
       TransactionManagerServices.getConfiguration().setWarnAboutZeroResourceTransaction(false);
 
       datasource = new PoolingDataSource();
-      datasource.setUniqueName(DATASOURCE_NAME);
-      datasource.setMinPoolSize(1);
-      datasource.setMaxPoolSize(5);
-      datasource.setPreparedStatementCacheSize(10);
-      datasource.setIsolationLevel("READ_COMMITTED");
-      datasource.setAllowLocalTransactions(true);
-
       this.database = database;
       database.configuration.configure(datasource, connectionUrl);
-      datasource.init();
    }
 
    public Context getNamingContext () { return context; }
