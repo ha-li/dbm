@@ -15,19 +15,32 @@ import java.util.List;
  */
 public class SubscriptionApp {
 
+
+
    static TransactionManagerSetup TMS;
 
-   static EntityManagerFactory EMF;
+   private EntityManagerFactory EMF;
+   private String peristentUnitName;
+
    static {
       try {
          TMS = new TransactionManagerSetup (Database.ORACLE);
-         EMF = Persistence.createEntityManagerFactory ("ApplicationPU");
+         //EMF = Persistence.createEntityManagerFactory ("ApplicationPU");
       } catch (Exception ex) {
          ex.printStackTrace ();
          throw new ExceptionInInitializerError ("Exception with transaction manager setup object.");
       }
    }
 
+   public SubscriptionApp(String pUName) {
+      peristentUnitName = pUName;
+      try {
+         EMF = Persistence.createEntityManagerFactory (peristentUnitName);
+      } catch (Exception ex) {
+         ex.printStackTrace ();
+         throw new ExceptionInInitializerError ("Exception with transaction manager setup object.");
+      }
+   }
 
    public void updateMessage (Message message) throws Exception {
       UserTransaction tx = TMS.getUserTransaction ();
@@ -64,7 +77,7 @@ public class SubscriptionApp {
    }
 
    public static void main (String[] args) throws Exception {
-      SubscriptionApp app = new SubscriptionApp ();
+      SubscriptionApp app = new SubscriptionApp ("ApplicationPU");
 
       Message message = new Message();
       message.setText ("Hello World!");

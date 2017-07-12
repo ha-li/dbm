@@ -27,7 +27,7 @@ public class SubscriptionAppTest {
 
    @Test
    public void testUpdate () throws Exception {
-      SubscriptionApp app = new SubscriptionApp ();
+      SubscriptionApp app = new SubscriptionApp ("TestPU");
       Message message = new Message();
       message.setText ("Hello World!");
       app.saveMessage(message);
