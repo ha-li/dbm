@@ -17,7 +17,7 @@ public enum Database {
                          "URL",
                          connectionUrl != null
                             ? connectionUrl :
-                            "jdbc:oracle:thin:subadm/subadm@localhost:1521/xe"
+                            "jdbc:oracle:thin:subadm/subadm@localhost:1521:xe"
                  );
 
                  Properties connectionProperties = new Properties();
