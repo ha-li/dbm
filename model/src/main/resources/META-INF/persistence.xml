@@ -8,10 +8,10 @@
         <class>com.gecko.subscription.domain.Message</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
-            <!--
+
             <property name="javax.persistence.schema-generation.database.action"
                       value="drop-and-create"/>
-                      -->
+
             <property name="hibernate.format_sql" value="true"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.use_sql_comments" value="true"/>
