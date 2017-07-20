@@ -1,12 +1,9 @@
 package com.gecko.app.subscription;
 
-import com.gecko.env.Database;
-import com.gecko.env.TransactionManagerSetup;
+import com.gecko.core.application.Application;
 import com.gecko.subscription.domain.Message;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.transaction.UserTransaction;
 import java.util.List;
 
@@ -15,38 +12,14 @@ import java.util.List;
  */
 public class SubscriptionApp {
 
-
-
-   static TransactionManagerSetup TMS;
-
-   private EntityManagerFactory EMF;
-   private String peristentUnitName;
-
-   static {
-      try {
-         TMS = new TransactionManagerSetup (Database.ORACLE);
-         //EMF = Persistence.createEntityManagerFactory ("ApplicationPU");
-      } catch (Exception ex) {
-         ex.printStackTrace ();
-         throw new ExceptionInInitializerError ("Exception with transaction manager setup object.");
-      }
-   }
-
-   public SubscriptionApp(String pUName) {
-      peristentUnitName = pUName;
-      try {
-         EMF = Persistence.createEntityManagerFactory (peristentUnitName);
-      } catch (Exception ex) {
-         ex.printStackTrace ();
-         throw new ExceptionInInitializerError ("Exception with transaction manager setup object.");
-      }
+   public SubscriptionApp() {
    }
 
    public void updateMessage (Message message) throws Exception {
-      UserTransaction tx = TMS.getUserTransaction ();
+      UserTransaction tx = Application.getUserTransaction ();
       tx.begin();
 
-      EntityManager em = EMF.createEntityManager ();
+      EntityManager em = Application.createEntityManager ();
 
       em.merge (message);
       tx.commit ();
@@ -54,10 +27,11 @@ public class SubscriptionApp {
    }
 
    public List<Message> getMessages () throws Exception {
-      UserTransaction tx = TMS.getUserTransaction ();
+
+      UserTransaction tx = Application.getUserTransaction ();
       tx.begin ();
 
-      EntityManager em = EMF.createEntityManager ();
+      EntityManager em = Application.createEntityManager ();
       List<Message> list = em.createQuery ("select m from com.gecko.subscription.domain.Message m ").getResultList ();
 
       tx.commit ();
@@ -66,10 +40,10 @@ public class SubscriptionApp {
    }
 
    public void saveMessage (Message message) throws Exception {
-      UserTransaction tx = TMS.getUserTransaction ();
+      UserTransaction tx = Application.getUserTransaction ();
       tx.begin ();
 
-      EntityManager em = EMF.createEntityManager ();
+      EntityManager em = Application.createEntityManager ();
       em.persist (message);
 
       tx.commit ();
@@ -77,7 +51,7 @@ public class SubscriptionApp {
    }
 
    public static void main (String[] args) throws Exception {
-      SubscriptionApp app = new SubscriptionApp ("ApplicationPU");
+      SubscriptionApp app = new SubscriptionApp ();
 
       Message message = new Message();
       message.setText ("Hello World!");

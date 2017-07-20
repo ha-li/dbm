@@ -1,4 +1,4 @@
-package com.gecko.env;
+package com.gecko.core.application;
 
 import bitronix.tm.TransactionManagerServices;
 import bitronix.tm.resource.jdbc.PoolingDataSource;

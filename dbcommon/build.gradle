@@ -1,4 +1,4 @@
-description = 'Application Layer'
+description = 'db common'
 
 repositories {
    mavenCentral ()
@@ -11,7 +11,11 @@ repositories {
 
 dependencies {
    compile project (':model')
-   compile project (':dbcommon')
+
+   // my ojdbc driver jar, see flatDir
+   compile 'oracle:ojdbc6:11.2.0.3'
+   compile 'org.codehaus.btm:btm:2.1.3'
+   compile 'org.hibernate:hibernate-entitymanager:5.0.0.Final'
 
    testCompile 'junit:junit:4.12'
 }
