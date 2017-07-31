@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<hibernate-mapping default-access="field">
+    <class name="com.gecko.subscription.domain.Message">
+        <id name="id">
+        </id>
+        <property name="name" type="String"/>
+        <property name="auctionEnd" type="timestamp"/>
+    </class>
+
+</hibernate-mapping>

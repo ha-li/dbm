@@ -1,6 +1,7 @@
 package com.gecko.app.subscription;
 
 import com.gecko.subscription.domain.Message;
+import com.gecko.test.utils.TestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
@@ -47,6 +48,9 @@ public class SubscriptionAppTest {
       app.updateMessage (message);
       List<Message> list2 = app.getMessages ();
       Assert.assertEquals (list2.get(0).getText(), "Bottoms up!");
+
+      List<Message> listAll = app.getAllMessages ();
+      Assert.assertEquals (listAll.get(0).getText(), "Bottoms up!");
       //Assert.assertEquals (list2.get(0).getId ().longValue (), 1L);
    }
 }

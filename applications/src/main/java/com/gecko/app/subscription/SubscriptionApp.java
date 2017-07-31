@@ -4,6 +4,7 @@ import com.gecko.core.application.Application;
 import com.gecko.subscription.domain.Message;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.transaction.UserTransaction;
 import java.util.List;
 
@@ -48,6 +49,18 @@ public class SubscriptionApp {
 
       tx.commit ();
       em.close();
+   }
+
+   public List<Message> getAllMessages () throws Exception {
+      UserTransaction tx = Application.getUserTransaction();
+      tx.begin();
+
+      EntityManager em = Application.createEntityManager ();
+      TypedQuery<Message> query = em.createNamedQuery("findMessageById", Message.class);
+      List<Message> results = query.getResultList ();
+
+      tx.commit ();
+      return results;
    }
 
    public static void main (String[] args) throws Exception {

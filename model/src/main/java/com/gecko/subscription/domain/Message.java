@@ -7,7 +7,20 @@ import javax.persistence.Id;
 /**
  * Created by hlieu on 07/8/17.
  */
+@javax.persistence.NamedQueries ({
+     @javax.persistence.NamedQuery (
+             name="findMessageById",
+             query = "select m from SUB_MESSAGES m"
+     )
+})
+
+
 @Entity (name="SUB_MESSAGES")
+/*
+   this requires something special
+@org.hibernate.annotations.Cache (
+   usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE
+) */
 public class Message {
 
    @Id
