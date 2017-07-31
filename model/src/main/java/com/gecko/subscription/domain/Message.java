@@ -1,8 +1,12 @@
 package com.gecko.subscription.domain;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.util.UUID;
 
 /**
  * Created by hlieu on 07/8/17.
@@ -24,16 +28,22 @@ import javax.persistence.Id;
 public class Message {
 
    @Id
-   @GeneratedValue
-   private Long id;
+   @GeneratedValue(generator = "UUID")
+   @GenericGenerator (
+      name="UUID",
+      strategy = "org.hibernate.id.UUIDGenerator"
+   )
+   private String id;
 
+   @Column(name="TEXT")
    private String text;
 
-   public Long getId () {
+
+   public String getId () {
       return id;
    }
 
-   public void setId (Long id) {
+   public void setId (String id) {
       this.id = id;
    }
 

@@ -14,7 +14,7 @@
 
   /
   create table SUB_PUBLICATION (
-     publication_id varchar2(50) not null,
+     id varchar2(50) not null,
      pub_interval varchar2(50) not null,
      pub_name varchar2(255) not null,
      publisher_fk varchar2(100) not null,

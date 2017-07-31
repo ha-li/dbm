@@ -40,18 +40,20 @@ public class SubscriptionApp {
       return list;
    }
 
-   public void saveMessage (Message message) throws Exception {
+   public <T> T saveMessage (T entity) throws Exception {
       UserTransaction tx = Application.getUserTransaction ();
       tx.begin ();
 
       EntityManager em = Application.createEntityManager ();
-      em.persist (message);
+      em.persist (entity);
 
       tx.commit ();
       em.close();
+
+      return entity;
    }
 
-   public List<Message> getAllMessages () throws Exception {
+   public static List<Message> getAllMessages () throws Exception {
       UserTransaction tx = Application.getUserTransaction();
       tx.begin();
 
@@ -63,10 +65,12 @@ public class SubscriptionApp {
       return results;
    }
 
+
+
    public static void main (String[] args) throws Exception {
       SubscriptionApp app = new SubscriptionApp ();
 
-      Message message = new Message();
+      Message message = new Message ();
       message.setText ("Hello World!");
       app.saveMessage(message);
 

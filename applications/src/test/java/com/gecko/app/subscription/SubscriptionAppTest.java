@@ -1,11 +1,12 @@
 package com.gecko.app.subscription;
 
+import com.gecko.core.application.Application;
 import com.gecko.subscription.domain.Message;
-import com.gecko.test.utils.TestUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
+import javax.transaction.UserTransaction;
 import java.util.List;
 
 /**
@@ -36,8 +37,9 @@ public class SubscriptionAppTest {
    public void testUpdate () throws Exception {
 
       SubscriptionApp app = new SubscriptionApp ();
-      Message message = new Message();
+      Message message = new Message ();
       message.setText ("Hello World!");
+
       app.saveMessage(message);
 
       List<Message> list = app.getMessages ();
@@ -46,8 +48,10 @@ public class SubscriptionAppTest {
 
       message.setText("Bottoms up!");
       app.updateMessage (message);
+
       List<Message> list2 = app.getMessages ();
       Assert.assertEquals (list2.get(0).getText(), "Bottoms up!");
+
 
       List<Message> listAll = app.getAllMessages ();
       Assert.assertEquals (listAll.get(0).getText(), "Bottoms up!");

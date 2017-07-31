@@ -14,7 +14,7 @@
 
   /
   create table SUB_PAYMENT_PLAN (
-     payment_plan_id varchar2(50) not null,
+     id varchar2(50) not null,
      pay_interval varchar2(50) not null,
      amount number(10,2) not null,
      discount_plan_fk varchar2(100) not null
@@ -38,7 +38,7 @@ declare
 
   /
   create table SUB_DISCOUNT (
-     discount_plan_id varchar2(50) not null,
+     id varchar2(50) not null,
      discount_frequency varchar2(50) not null,
      amount number(10,2),
      percent number(10,2)
