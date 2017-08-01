@@ -1,14 +1,11 @@
 package com.gecko.subscription.domain;
 
-import com.gecko.core.application.Application;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EntityManager;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.transaction.UserTransaction;
 import java.io.Serializable;
 
 /**
@@ -67,8 +64,5 @@ public class Message implements Serializable {
    public void setText (String text) {
       this.text = text;
    }
-
-
-
 
 }

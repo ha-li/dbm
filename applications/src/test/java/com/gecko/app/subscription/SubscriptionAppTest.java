@@ -1,6 +1,7 @@
 package com.gecko.app.subscription;
 
 import com.gecko.core.application.Application;
+import com.gecko.core.repository.MessageRepository;
 import com.gecko.subscription.domain.Message;
 import org.junit.After;
 import org.junit.Assert;
@@ -14,20 +15,6 @@ import java.util.List;
  */
 public class SubscriptionAppTest {
 
-/*
-   @Test
-   public void testInsert () throws Exception {
-      SubscriptionApp app = new SubscriptionApp ();
-      Message message = new Message();
-      message.setText ("Hello World!");
-      app.saveMessage(message);
-
-      List<Message> list = app.getMessages ();
-      Assert.assertEquals (list.get(0).getText(), "Hello World!");
-      Assert.assertEquals (list.get(0).getId ().longValue (), 1L);
-   }
-*/
-
    @After
    public void cleanUp () {
       //TestUtil.truncateTables ();
@@ -40,21 +27,18 @@ public class SubscriptionAppTest {
       Message message = new Message ();
       message.setText ("Hello World!");
 
-       Message.saveMessage(message);
+      MessageRepository.saveMessage(message);
 
-      List<Message> list = app.getMessages ();
+      List<Message> list = MessageRepository.getMessages ();
       Assert.assertEquals (list.get(0).getText(), "Hello World!");
-      //Assert.assertEquals (list.get(0).getId ().longValue (), 1L);
 
       message.setText("Bottoms up!");
-      app.updateMessage (message);
+      MessageRepository.updateMessage (message);
 
-      List<Message> list2 = app.getMessages ();
+      List<Message> list2 = MessageRepository.getMessages ();
       Assert.assertEquals (list2.get(0).getText(), "Bottoms up!");
 
-
-      List<Message> listAll = app.getAllMessages ();
+      List<Message> listAll = MessageRepository.getAllMessages ();
       Assert.assertEquals (listAll.get(0).getText(), "Bottoms up!");
-      //Assert.assertEquals (list2.get(0).getId ().longValue (), 1L);
    }
 }
