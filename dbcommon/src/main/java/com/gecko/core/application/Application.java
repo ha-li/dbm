@@ -16,15 +16,6 @@ public class Application {
    static {
       try {
          TMS = new TransactionManagerSetup (Database.ORACLE);
-         createEntityManagerFactory ();
-      } catch (Exception ex) {
-         ex.printStackTrace ();
-         throw new ExceptionInInitializerError ("Exception with transaction manager setup object.");
-      }
-   }
-
-   public static void createEntityManagerFactory() {
-      try {
          EMF = Persistence.createEntityManagerFactory (persistenceUnit);
       } catch (Exception ex) {
          ex.printStackTrace ();

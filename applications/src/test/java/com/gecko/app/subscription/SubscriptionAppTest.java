@@ -40,7 +40,7 @@ public class SubscriptionAppTest {
       Message message = new Message ();
       message.setText ("Hello World!");
 
-      app.saveMessage(message);
+       Message.saveMessage(message);
 
       List<Message> list = app.getMessages ();
       Assert.assertEquals (list.get(0).getText(), "Hello World!");
