@@ -16,7 +16,7 @@ public class SubscriptionApp {
       Message message = new Message ();
       message.setText ("Hello World!");
 
-      MessageRepository.saveMessage(message);
+      MessageRepository.save(message);
 
       List<Message> list = MessageRepository.getMessages();
 

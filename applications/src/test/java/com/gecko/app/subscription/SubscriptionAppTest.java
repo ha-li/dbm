@@ -1,13 +1,11 @@
 package com.gecko.app.subscription;
 
-import com.gecko.core.application.Application;
 import com.gecko.core.repository.MessageRepository;
 import com.gecko.subscription.domain.Message;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
-import javax.transaction.UserTransaction;
 import java.util.List;
 
 /**
@@ -27,7 +25,7 @@ public class SubscriptionAppTest {
       Message message = new Message ();
       message.setText ("Hello World!");
 
-      MessageRepository.saveMessage(message);
+      MessageRepository.save(message);
 
       List<Message> list = MessageRepository.getMessages ();
       Assert.assertEquals (list.get(0).getText(), "Hello World!");

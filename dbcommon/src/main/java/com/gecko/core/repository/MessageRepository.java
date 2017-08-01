@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Created by hlieu on 07/31/17.
  */
-public class MessageRepository {
+public class MessageRepository extends Repository {
 
    public static void updateMessage (Message message) throws Exception {
       UserTransaction tx = Application.getUserTransaction ();
@@ -34,18 +34,6 @@ public class MessageRepository {
       tx.commit ();
       em.close();
       return list;
-   }
-
-   public static <T> T saveMessage (T entity) throws Exception {
-      UserTransaction tx = Application.getUserTransaction();
-      tx.begin();
-
-      EntityManager em = Application.createEntityManager ();
-      em.persist (entity);
-      em.close();
-
-      tx.commit ();
-      return entity;
    }
 
    public static List<Message> getAllMessages () throws Exception {
