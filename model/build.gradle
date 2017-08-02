@@ -6,7 +6,7 @@ repositories {
 
 dependencies {
    compile project(':dbcommon')
-   compile 'org.hibernate:hibernate-entitymanager:5.0.0.Final'
+   compile 'org.hibernate:hibernate-entitymanager:5.2.10.Final'
    compile 'org.hibernate:hibernate-validator:5.4.1.Final'
    compile 'javax.validation:validation-api:1.1.0.Final'
 }
