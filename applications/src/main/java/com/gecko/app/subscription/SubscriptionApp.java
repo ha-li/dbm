@@ -15,6 +15,7 @@ public class SubscriptionApp {
 
       Message message = new Message ();
       message.setText ("Hello World!");
+      message.setTransientText ("Do not Save me");
 
       MessageRepository.save(message);
 

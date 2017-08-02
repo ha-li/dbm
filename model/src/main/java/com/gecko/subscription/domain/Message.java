@@ -2,6 +2,7 @@ package com.gecko.subscription.domain;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -37,7 +38,7 @@ public class Message implements Serializable {
 
    private static final long serialVersionUID = 8404396176131219022L;
 
-   @Id
+   @Id @Basic (optional=false)
    @GeneratedValue (generator = "UUID")
    @GenericGenerator (
            name="UUID",
@@ -45,9 +46,15 @@ public class Message implements Serializable {
    )
    private String id;
 
+   // there are 3 ways to specify a column is not-nullable
+   // 1. @Column (..., nullable=false)
+   // 2. @Basic (optional=false)
+   // 3. @NotNull annotation in in validation (wonky - requires calling validation api)
    @Column (name="TEXT")
    private String text;
 
+   //@Transient
+   private transient String transientText;
 
    public String getId () {
       return id;
@@ -65,4 +72,11 @@ public class Message implements Serializable {
       this.text = text;
    }
 
+   public String getTransientText () {
+      return transientText;
+   }
+
+   public void setTransientText (String transientText) {
+      this.transientText = transientText;
+   }
 }

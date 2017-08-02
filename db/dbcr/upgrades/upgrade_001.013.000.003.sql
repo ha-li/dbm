@@ -14,8 +14,9 @@ declare
 
   /
   create table SUB_MESSAGES (
-     id varchar2(50) not null,
-     text varchar2(50) not null
+     id                varchar2(50) not null,
+     text              varchar2(50) not null,
+     transient_text    varchar2(100)
   )
   /
 
