@@ -16,7 +16,9 @@ declare
   create table SUB_MESSAGES (
      id                varchar2(50) not null,
      text              varchar2(50) not null,
-     transient_text    varchar2(100)
+     transient_text    varchar2(100),
+     modified_date     timestamp,
+     created_date      timestamp
   )
   /
 

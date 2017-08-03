@@ -1,5 +1,6 @@
 package com.gecko.subscription.domain;
 
+import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Basic;
@@ -7,7 +8,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by hlieu on 07/8/17.
@@ -53,6 +57,17 @@ public class Message implements Serializable {
    @Column (name="TEXT")
    private String text;
 
+
+   @Temporal (TemporalType.TIMESTAMP)
+   @Column(name="MODIFIED_DATE")
+   @org.hibernate.annotations.UpdateTimestamp
+   private Date modifiedDate;
+
+   @Temporal (TemporalType.TIMESTAMP)
+   @Column(name="CREATED_DATE")
+   @org.hibernate.annotations.CreationTimestamp
+   private Date createdDate;
+
    //@Transient
    private transient String transientText;
 
@@ -78,5 +93,13 @@ public class Message implements Serializable {
 
    public void setTransientText (String transientText) {
       this.transientText = transientText;
+   }
+
+   public Date getModifiedDate () {
+      return modifiedDate;
+   }
+
+   public void setModifiedDate (Date modifiedDate) {
+      this.modifiedDate = modifiedDate;
    }
 }

@@ -17,15 +17,15 @@ public class SubscriptionApp {
    public static void messages () throws Exception {
       // SubscriptionApp app = new SubscriptionApp ();
 
-      Message message = new Message ();
-      message.setText ("Hello World!");
-      message.setTransientText ("Do not Save me");
+      //Message message = new Message ();
+      //message.setText ("Hello World!");
+      //message.setTransientText ("Do not Save me");
 
-      MessageRepository.save(message);
+      //MessageRepository.save(message);
 
       List<Message> list = MessageRepository.getMessages();
 
-      list.get(0).setText("I'm here to rule the world!");
+      list.get(0).setText("I'm here to rule the world! Booyah");
       MessageRepository.updateMessage (list.get(0));
    }
 
@@ -44,8 +44,8 @@ public class SubscriptionApp {
    }
 
    public static void main (String[] args) throws Exception {
-      //SubscriptionApp.messages ();
+      SubscriptionApp.messages ();
       //SubscriptionApp.items ();
-      SubscriptionApp.itemsAvg ();
+      //SubscriptionApp.itemsAvg ();
    }
 }
