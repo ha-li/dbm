@@ -5,6 +5,7 @@ import com.gecko.core.repository.MessageRepository;
 import com.gecko.subscription.domain.Item;
 import com.gecko.subscription.domain.Message;
 import com.gecko.subscription.domain.MessageType;
+import com.gecko.subscription.domain.Sender;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -19,6 +20,9 @@ public class SubscriptionApp {
       Message message = new Message();
       message.setText ("Ninja fighting machine!");
       message.setType(MessageType.JMS);
+
+      Sender sender = new Sender ("Bob", "Caygeon");
+      message.setSender(sender);
       MessageRepository.save(message);
 
       List<Message> list = MessageRepository.getMessages();

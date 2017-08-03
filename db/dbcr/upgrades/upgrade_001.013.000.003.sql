@@ -19,7 +19,9 @@ declare
      transient_text    varchar2(100),
      modified_date     timestamp,
      created_date      timestamp,
-     type              varchar2(20)
+     type              varchar2(20),
+     sender_first      varchar2(50),
+     sender_last       varchar2(50)
   )
   /
 

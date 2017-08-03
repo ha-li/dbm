@@ -74,6 +74,8 @@ public class Message implements Serializable {
    @Column(name="TYPE")
    private MessageType type;
 
+   private Sender sender;
+
    //@Transient
    private transient String transientText;
 
@@ -123,5 +125,13 @@ public class Message implements Serializable {
 
    public void setType (MessageType type) {
       this.type = type;
+   }
+
+   public Sender getSender () {
+      return sender;
+   }
+
+   public void setSender (Sender sender) {
+      this.sender = sender;
    }
 }
