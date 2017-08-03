@@ -18,7 +18,8 @@ declare
      text              varchar2(50) not null,
      transient_text    varchar2(100),
      modified_date     timestamp,
-     created_date      timestamp
+     created_date      timestamp,
+     type              varchar2(20)
   )
   /
 

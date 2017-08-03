@@ -6,6 +6,8 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
@@ -68,6 +70,10 @@ public class Message implements Serializable {
    @org.hibernate.annotations.CreationTimestamp
    private Date createdDate;
 
+   @Enumerated(EnumType.STRING)
+   @Column(name="TYPE")
+   private MessageType type;
+
    //@Transient
    private transient String transientText;
 
@@ -101,5 +107,21 @@ public class Message implements Serializable {
 
    public void setModifiedDate (Date modifiedDate) {
       this.modifiedDate = modifiedDate;
+   }
+
+   public Date getCreatedDate () {
+      return createdDate;
+   }
+
+   public void setCreatedDate (Date createdDate) {
+      this.createdDate = createdDate;
+   }
+
+   public MessageType getType () {
+      return type;
+   }
+
+   public void setType (MessageType type) {
+      this.type = type;
    }
 }

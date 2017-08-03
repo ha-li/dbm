@@ -4,6 +4,7 @@ import com.gecko.core.repository.ItemRepository;
 import com.gecko.core.repository.MessageRepository;
 import com.gecko.subscription.domain.Item;
 import com.gecko.subscription.domain.Message;
+import com.gecko.subscription.domain.MessageType;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -15,17 +16,15 @@ import java.util.List;
 public class SubscriptionApp {
 
    public static void messages () throws Exception {
-      // SubscriptionApp app = new SubscriptionApp ();
-
-      //Message message = new Message ();
-      //message.setText ("Hello World!");
-      //message.setTransientText ("Do not Save me");
-
-      //MessageRepository.save(message);
+      Message message = new Message();
+      message.setText ("Ninja fighting machine!");
+      message.setType(MessageType.JMS);
+      MessageRepository.save(message);
 
       List<Message> list = MessageRepository.getMessages();
 
       list.get(0).setText("I'm here to rule the world! Booyah");
+
       MessageRepository.updateMessage (list.get(0));
    }
 
