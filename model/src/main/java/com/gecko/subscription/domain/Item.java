@@ -3,6 +3,8 @@ package com.gecko.subscription.domain;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -34,8 +36,9 @@ public class Item implements Serializable {
    @Column(name="AUCTION_END")
    private LocalDateTime auctionEnd;
 
-   @Column(name="BID_AMOUNT")
-   private BigDecimal bidAmount;
+   // embedded can be at class level or at member level
+   @Embedded
+   private MonetaryAmount bidAmount;
 
    @Transient
    private String signature;
@@ -69,11 +72,11 @@ public class Item implements Serializable {
       this.auctionEnd = auctionEnd;
    }
 
-   public BigDecimal getBidAmount () {
+   public MonetaryAmount getBidAmount () {
       return bidAmount;
    }
 
-   public void setBidAmount (BigDecimal bidAmount) {
+   public void setBidAmount (MonetaryAmount bidAmount) {
       this.bidAmount = bidAmount;
    }
 

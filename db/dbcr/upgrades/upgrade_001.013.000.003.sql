@@ -47,7 +47,8 @@ declare
      id                varchar2(50) not null,
      name              varchar2(50) not null,
      auction_end       TIMESTAMP,
-     bid_amount        number(19,4)
+     amount            number(19,4),
+     currency          varchar2(5)
   )
   /
 

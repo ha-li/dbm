@@ -5,9 +5,9 @@ import com.gecko.core.repository.MessageRepository;
 import com.gecko.subscription.domain.Item;
 import com.gecko.subscription.domain.Message;
 import com.gecko.subscription.domain.MessageType;
+import com.gecko.subscription.domain.MonetaryAmount;
 import com.gecko.subscription.domain.Sender;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -34,7 +34,9 @@ public class SubscriptionApp {
 
    public static void items () throws Exception {
       Item item = new Item ();
-      item.setBidAmount (BigDecimal.valueOf (12.0));
+
+      MonetaryAmount m = new MonetaryAmount ("USD", 5.00);
+      item.setBidAmount (m);
       item.setName ("Jesus Christ statue");
       item.setAuctionEnd (LocalDateTime.now());
       item.setSignature ("Bob Leftner");
@@ -47,8 +49,8 @@ public class SubscriptionApp {
    }
 
    public static void main (String[] args) throws Exception {
-      SubscriptionApp.messages ();
-      //SubscriptionApp.items ();
+      //SubscriptionApp.messages ();
+      SubscriptionApp.items ();
       //SubscriptionApp.itemsAvg ();
    }
 }
