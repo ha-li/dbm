@@ -1,10 +1,11 @@
 package com.gecko.subscription.domain;
 
+import com.gecko.util.ZipcodeConverter;
+import org.hibernate.annotations.Columns;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -36,15 +37,28 @@ public class Item implements Serializable {
    @Column(name="AUCTION_END")
    private LocalDateTime auctionEnd;
 
-   // embedded can be at class level or at member level
-   @Embedded
+
+   @org.hibernate.annotations.Type (
+       type="com.gecko.subscription.domain.MonetaryAmountCustomUserType"
+   )
+   @Columns (columns = {
+       @Column(name="AMOUNT"),
+       @Column(name="CURRENCY")
+   })
    private MonetaryAmount bidAmount;
+
+   @Convert (
+      converter = ZipcodeConverter.class,
+           disableConversion = false
+   )
+   @Column(name="ZIPCODE")
+   private Zipcode zipcode;
 
    @Transient
    private String signature;
 
    @org.hibernate.annotations.Formula (
-       "(select sum(i.bid_amount) from sub_item i)"
+       "(select sum(i.amount) from sub_item i)"
    )
    private BigDecimal auctionTotal;
 
@@ -94,5 +108,13 @@ public class Item implements Serializable {
 
    public void setAuctionTotal (BigDecimal auctionTotal) {
       this.auctionTotal = auctionTotal;
+   }
+
+   public Zipcode getZipcode () {
+      return zipcode;
+   }
+
+   public void setZipcode (Zipcode zipcode) {
+      this.zipcode = zipcode;
    }
 }

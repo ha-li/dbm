@@ -48,7 +48,8 @@ declare
      name              varchar2(50) not null,
      auction_end       TIMESTAMP,
      amount            number(19,4),
-     currency          varchar2(5)
+     currency          varchar2(5),
+     zipcode           varchar2(10)
   )
   /
 

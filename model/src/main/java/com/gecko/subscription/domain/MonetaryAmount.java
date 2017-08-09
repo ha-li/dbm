@@ -1,7 +1,5 @@
 package com.gecko.subscription.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import java.math.BigDecimal;
 
 /**
@@ -9,17 +7,15 @@ import java.math.BigDecimal;
  */
 public class MonetaryAmount {
 
-   @Column (name="AMOUNT")
    private BigDecimal amount;
 
-   @Column (name="CURRENCY")
    private String currency;
 
    public MonetaryAmount () {}
 
-   public MonetaryAmount (String currency, double amount) {
+   public MonetaryAmount (String currency, BigDecimal amount) {
       this.currency = currency;
-      this.amount = BigDecimal.valueOf(amount);
+      this.amount = amount;
    }
 
    public BigDecimal getAmount () {
@@ -52,5 +48,11 @@ public class MonetaryAmount {
 
    public String toString () {
       return currency + " " + amount;
+   }
+
+   public static MonetaryAmount fromString (String s) {
+      String[] vals = s.split (" ");
+      BigDecimal d = new BigDecimal(vals[1]);
+      return new MonetaryAmount (vals[0], d);
    }
 }
