@@ -37,6 +37,11 @@ public class Item implements Serializable {
    @Column(name="AUCTION_END")
    private LocalDateTime auctionEnd;
 
+   @org.hibernate.annotations.Type (
+      type="com.gecko.subscription.domain.SpecialEncryptedCustomUserType"
+   )
+   @Column(name="ENC_VALUE")
+   private String encryptedValue;
 
    @org.hibernate.annotations.Type (
        type="com.gecko.subscription.domain.MonetaryAmountCustomUserType"
@@ -116,5 +121,13 @@ public class Item implements Serializable {
 
    public void setZipcode (Zipcode zipcode) {
       this.zipcode = zipcode;
+   }
+
+   public String getEncryptedValue () {
+      return encryptedValue;
+   }
+
+   public void setEncryptedValue (String encryptedValue) {
+      this.encryptedValue = encryptedValue;
    }
 }

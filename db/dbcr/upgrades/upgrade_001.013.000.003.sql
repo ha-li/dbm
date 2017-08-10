@@ -49,7 +49,8 @@ declare
      auction_end       TIMESTAMP,
      amount            number(19,4),
      currency          varchar2(5),
-     zipcode           varchar2(10)
+     zipcode           varchar2(10),
+     enc_value         varchar2(1000)
   )
   /
 

@@ -34,21 +34,31 @@ public class SubscriptionApp {
       MessageRepository.updateMessage (list.get(0));
    }
 
+   // inserts an item. Item has 2 custom types, a custom composite type
+   // MonetaryAmountCustomUserType and
+   // SpecialEncryptedCustomUserType
    public static void items () throws Exception {
       Item item = new Item ();
 
+      // the MonetaryAmountCustomUserType will multiply the amount by 2
+      // ex to simulate a foreign currency change
       MonetaryAmount m = new MonetaryAmount ("USD", new BigDecimal (5.00));
       item.setBidAmount (m);
       item.setName ("Jesus Christ statue");
       item.setAuctionEnd (LocalDateTime.now());
       item.setSignature ("Bob Leftner");
       item.setZipcode (Zipcode.valueOf ("34234"));
+
+      // SpecialEncryptedCustomUserType will encrypt the string in a "special" way
+      // and decrypt during the nullSafeGet
+      item.setEncryptedValue ("DoRaMe");
       ItemRepository.save (item);
    }
 
    public static void getItem (String uuid) throws Exception {
       Item item = ItemRepository.getById (uuid);
       System.out.println (item.getBidAmount ().getAmount ());
+      System.out.println (item.getEncryptedValue ());
    }
 
    public static void itemsAvg () throws Exception {
@@ -67,9 +77,9 @@ public class SubscriptionApp {
       Metadata metadata = metadataBuilder.build(); */
 
 
-      //SubscriptionApp.messages ();
-      SubscriptionApp.items ();
-      SubscriptionApp.getItem ("545dc916-f623-400a-8ce7-868cfe12b72d");
+      SubscriptionApp.messages ();
+      //SubscriptionApp.items ();
+      SubscriptionApp.getItem ("29825c65-d69c-407a-b571-2b729dd549a4");
       //SubscriptionApp.itemsAvg ();
    }
 }
