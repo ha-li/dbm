@@ -9,6 +9,8 @@ import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -66,6 +68,10 @@ public class Item implements Serializable {
        "(select sum(i.amount) from sub_item i)"
    )
    private BigDecimal auctionTotal;
+
+   @JoinColumn (name="MESSAGE_FK")
+   @ManyToOne
+   private Message message;
 
    public String getId () {
       return id;
@@ -129,5 +135,13 @@ public class Item implements Serializable {
 
    public void setEncryptedValue (String encryptedValue) {
       this.encryptedValue = encryptedValue;
+   }
+
+   public Message getMessage () {
+      return message;
+   }
+
+   public void setMessage (Message message) {
+      this.message = message;
    }
 }

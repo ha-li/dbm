@@ -25,6 +25,11 @@ declare
   )
   /
 
+  alter table sub_messages
+  add constraint messages_id_pk
+  primary key (id)
+  /
+
   commit
   /
 
@@ -50,8 +55,16 @@ declare
      amount            number(19,4),
      currency          varchar2(5),
      zipcode           varchar2(10),
-     enc_value         varchar2(1000)
+     enc_value         varchar2(1000),
+     message_fk        varchar2(50)
   )
+  /
+
+  -- foreign keys need to point to a primary key or indexed
+  alter table SUB_ITEM
+  add constraint message_id_fk
+  foreign key (message_fk)
+  references sub_messages (id)
   /
 
   commit

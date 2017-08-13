@@ -1,6 +1,7 @@
 package com.gecko.core.repository;
 
 import com.gecko.core.application.Application;
+import com.gecko.subscription.domain.Item;
 import com.gecko.subscription.domain.Message;
 
 import javax.persistence.EntityManager;
@@ -11,7 +12,7 @@ import java.util.List;
 /**
  * Created by hlieu on 07/31/17.
  */
-public class MessageRepository extends Repository {
+public class MessageRepository implements Repository<Message> {
 
    public static void updateMessage (Message message) throws Exception {
       UserTransaction tx = Application.getUserTransaction ();
@@ -47,4 +48,28 @@ public class MessageRepository extends Repository {
       tx.commit ();
       return results;
    }
+
+   /* @Override
+   public Message getById (String id) throws Exception {
+      UserTransaction tx = Application.getUserTransaction ();
+      tx.begin();
+      EntityManager em = Application.createEntityManager ();
+      Message item = em.find(Message.class, id);
+      tx.commit ();
+      em.close();
+      return item;
+   }
+
+   @Override
+   public Message save (Message entity) throws Exception {
+      UserTransaction tx = Application.getUserTransaction();
+      tx.begin();
+
+      EntityManager em = Application.createEntityManager ();
+      em.persist (entity);
+      em.close();
+
+      tx.commit ();
+      return entity;
+   } */
 }

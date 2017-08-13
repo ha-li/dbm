@@ -2,6 +2,7 @@ package com.gecko.app.subscription;
 
 import com.gecko.core.repository.ItemRepository;
 import com.gecko.core.repository.MessageRepository;
+import com.gecko.core.repository.Repository;
 import com.gecko.subscription.domain.Item;
 import com.gecko.subscription.domain.Message;
 import com.gecko.subscription.domain.MessageType;
@@ -25,7 +26,7 @@ public class SubscriptionApp {
 
       Sender sender = new Sender ("Bob", "Caygeon");
       message.setSender(sender);
-      MessageRepository.save(message);
+      Repository.save(message);
 
       List<Message> list = MessageRepository.getMessages();
 
@@ -38,6 +39,8 @@ public class SubscriptionApp {
    // MonetaryAmountCustomUserType and
    // SpecialEncryptedCustomUserType
    public static void items () throws Exception {
+      Message message = Repository.getById(Message.class, "370dee85-0fba-4d42-ac7b-d1a2fc0e477d");
+
       Item item = new Item ();
 
       // the MonetaryAmountCustomUserType will multiply the amount by 2
@@ -48,21 +51,21 @@ public class SubscriptionApp {
       item.setAuctionEnd (LocalDateTime.now());
       item.setSignature ("Bob Leftner");
       item.setZipcode (Zipcode.valueOf ("34234"));
-
+      item.setMessage(message);
       // SpecialEncryptedCustomUserType will encrypt the string in a "special" way
       // and decrypt during the nullSafeGet
       item.setEncryptedValue ("DoRaMe");
-      ItemRepository.save (item);
+      Repository.save (item);
    }
 
    public static void getItem (String uuid) throws Exception {
-      Item item = ItemRepository.getById (uuid);
+      Item item = Repository.getById (Item.class, uuid);
       System.out.println (item.getBidAmount ().getAmount ());
       System.out.println (item.getEncryptedValue ());
    }
 
    public static void itemsAvg () throws Exception {
-      Item item = ItemRepository.getById ("c91f108b-d9c1-4214-a6a4-fb0d07d79fc7");
+      Item item = Repository.getById (Item.class, "c91f108b-d9c1-4214-a6a4-fb0d07d79fc7");
       System.out.println (item.getAuctionTotal ());
    }
 
@@ -78,8 +81,8 @@ public class SubscriptionApp {
 
 
       SubscriptionApp.messages ();
-      //SubscriptionApp.items ();
-      SubscriptionApp.getItem ("29825c65-d69c-407a-b571-2b729dd549a4");
+      SubscriptionApp.items ();
+      //SubscriptionApp.getItem ("29825c65-d69c-407a-b571-2b729dd549a4");
       //SubscriptionApp.itemsAvg ();
    }
 }

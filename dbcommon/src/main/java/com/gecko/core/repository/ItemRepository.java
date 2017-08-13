@@ -9,10 +9,24 @@ import javax.transaction.UserTransaction;
 /**
  * Created by hlieu on 08/1/17.
  */
-public class ItemRepository extends Repository {
+public class ItemRepository implements Repository<Item> {
 
 
-   public static Item getById (String id) throws Exception {
+   /* @Override
+   public Item save (Item entity) throws Exception {
+      UserTransaction tx = Application.getUserTransaction();
+      tx.begin();
+
+      EntityManager em = Application.createEntityManager ();
+      em.persist (entity);
+      em.close();
+
+      tx.commit ();
+      return entity;
+   }
+
+   @Override
+   public Item getById (String id) throws Exception {
       UserTransaction tx = Application.getUserTransaction ();
       tx.begin();
       EntityManager em = Application.createEntityManager ();
@@ -20,5 +34,5 @@ public class ItemRepository extends Repository {
       tx.commit ();
       em.close();
       return item;
-   }
+   } */
 }
