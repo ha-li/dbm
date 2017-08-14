@@ -7,14 +7,18 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by hlieu on 07/30/17.
@@ -69,9 +73,21 @@ public class Item implements Serializable {
    )
    private BigDecimal auctionTotal;
 
+   // By default children objects of a join are eager loaded.
+   // lazy loading is a design pattern where you defer initializing the
+   // child object until you actually access the child, or do some action
+   // that requires knowing the children, such as iterating over them,
+   // or querying the size of them.
+   // Lazy loading is a performance optimization. You delay the most expensive
+   // operation until as needed basis.
    @JoinColumn (name="MESSAGE_FK")
-   @ManyToOne
+   @ManyToOne // (fetch= FetchType.LAZY)
    private Message message;
+
+   // In a OneToMany mapping, you need the 'mappedBy' which points
+   // to the field name on the other side of the relationship
+   @OneToMany (mappedBy="item", fetch= FetchType.LAZY)
+   protected Set<Bid> bids = new HashSet<> ();
 
    public String getId () {
       return id;
@@ -143,5 +159,14 @@ public class Item implements Serializable {
 
    public void setMessage (Message message) {
       this.message = message;
+   }
+
+
+   public Set<Bid> getBids () {
+      return bids;
+   }
+
+   public void setBids (Set<Bid> bids) {
+      this.bids = bids;
    }
 }

@@ -3,6 +3,7 @@ package com.gecko.app.subscription;
 import com.gecko.core.repository.ItemRepository;
 import com.gecko.core.repository.MessageRepository;
 import com.gecko.core.repository.Repository;
+import com.gecko.subscription.domain.Bid;
 import com.gecko.subscription.domain.Item;
 import com.gecko.subscription.domain.Message;
 import com.gecko.subscription.domain.MessageType;
@@ -11,6 +12,7 @@ import com.gecko.subscription.domain.Sender;
 import com.gecko.subscription.domain.Zipcode;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -39,10 +41,11 @@ public class SubscriptionApp {
    // MonetaryAmountCustomUserType and
    // SpecialEncryptedCustomUserType
    public static void items () throws Exception {
-      Message message = Repository.getById(Message.class, "370dee85-0fba-4d42-ac7b-d1a2fc0e477d");
+      Message message = Repository.getById(Message.class, "1f98ace3-2d04-4bd5-8bb5-e7613b809ed1");
 
       Item item = new Item ();
 
+      item.setMessage (message);
       // the MonetaryAmountCustomUserType will multiply the amount by 2
       // ex to simulate a foreign currency change
       MonetaryAmount m = new MonetaryAmount ("USD", new BigDecimal (5.00));
@@ -55,7 +58,9 @@ public class SubscriptionApp {
       // SpecialEncryptedCustomUserType will encrypt the string in a "special" way
       // and decrypt during the nullSafeGet
       item.setEncryptedValue ("DoRaMe");
-      Repository.save (item);
+      Repository.save(item);
+
+      //Repository.save (item);
    }
 
    public static void getItem (String uuid) throws Exception {
@@ -69,6 +74,33 @@ public class SubscriptionApp {
       System.out.println (item.getAuctionTotal ());
    }
 
+   public static void bids () throws Exception {
+      Item item = new Item ();
+
+      // the MonetaryAmountCustomUserType will multiply the amount by 2
+      // ex to simulate a foreign currency change
+      MonetaryAmount m = new MonetaryAmount ("USD", new BigDecimal (5.00));
+      item.setBidAmount (m);
+      item.setName ("Jesus Christ statue");
+      item.setAuctionEnd (LocalDateTime.now());
+      item.setSignature ("Bob Leftner");
+      item.setZipcode (Zipcode.valueOf ("34234"));
+
+      // SpecialEncryptedCustomUserType will encrypt the string in a "special" way
+      // and decrypt during the nullSafeGet
+      item.setEncryptedValue ("DoRaMe");
+      Repository.save(item);
+
+      Bid bid = new Bid ();
+      bid.setAmount(new BigDecimal (4.00));
+
+      bid.setText("Random text");
+      bid.setItem(item);
+
+      item.getBids ().add (bid);
+      Repository.save (bid);
+   }
+
    public static void main (String[] args) throws Exception {
       /* ServiceRegistry standardRegistry = new StandardServiceRegistryBuilder ().build ();
       MetadataSources sources = new MetadataSources (standardRegistry);
@@ -80,9 +112,10 @@ public class SubscriptionApp {
       Metadata metadata = metadataBuilder.build(); */
 
 
-      SubscriptionApp.messages ();
+      //SubscriptionApp.messages ();
       SubscriptionApp.items ();
-      //SubscriptionApp.getItem ("29825c65-d69c-407a-b571-2b729dd549a4");
+      //SubscriptionApp.bids();
+      //SubscriptionApp.getItem ("94824201-3f9a-4306-ad46-cf226cf4a42f");
       //SubscriptionApp.itemsAvg ();
    }
 }

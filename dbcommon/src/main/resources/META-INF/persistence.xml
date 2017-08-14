@@ -7,6 +7,7 @@
         <jta-data-source>subadm</jta-data-source>
         <class>com.gecko.subscription.domain.Message</class>
         <class>com.gecko.subscription.domain.Item</class>
+        <class>com.gecko.subscription.domain.Bid</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
 

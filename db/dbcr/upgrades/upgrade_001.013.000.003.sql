@@ -67,5 +67,10 @@ declare
   references sub_messages (id)
   /
 
+  alter table SUB_ITEM
+     add constraint item_id_pk
+  primary key (id)
+  /
+
   commit
   /
