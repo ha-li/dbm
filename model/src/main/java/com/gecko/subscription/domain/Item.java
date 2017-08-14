@@ -169,4 +169,16 @@ public class Item implements Serializable {
    public void setBids (Set<Bid> bids) {
       this.bids = bids;
    }
+
+   public void add (Bid bid) {
+      if (null == bid) {
+         throw new NullPointerException ("Bid cannot be null");
+      }
+      if (bid.getItem () != null) {
+         throw new IllegalArgumentException ("Bid is already assigned to an item.");
+      }
+
+      getBids ().add(bid);
+      bid.setItem(this);
+   }
 }
