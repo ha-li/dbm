@@ -14,15 +14,16 @@ import java.util.List;
  */
 public class MessageRepository implements Repository<Message> {
 
-   public static void updateMessage (Message message) throws Exception {
+   public static Message updateMessage (Message message) throws Exception {
       UserTransaction tx = Application.getUserTransaction ();
       tx.begin();
 
       EntityManager em = Application.createEntityManager ();
-      em.merge (message);
+      Message m = em.merge (message);
       em.close();
 
       tx.commit ();
+      return m;
    }
 
    public static List<Message> getMessages () throws Exception {
