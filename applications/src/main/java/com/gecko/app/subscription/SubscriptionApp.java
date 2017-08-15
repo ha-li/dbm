@@ -3,6 +3,7 @@ package com.gecko.app.subscription;
 import com.gecko.core.repository.MessageRepository;
 import com.gecko.core.repository.Repository;
 import com.gecko.subscription.domain.Bid;
+import com.gecko.subscription.domain.Description;
 import com.gecko.subscription.domain.Item;
 import com.gecko.subscription.domain.Message;
 import com.gecko.subscription.domain.MessageType;
@@ -43,8 +44,14 @@ public class SubscriptionApp {
       Message message = messages ();
       Message savedMessage = Repository.getById(Message.class, message.getId());
 
+      Description description = new Description ();
+      description.setDescription ("An auctionable item to display in a tank.");
+
       Item item = new Item ();
       item.setMessage (savedMessage);
+
+      item.setDescription (description);
+      Repository.save(description);
       // the MonetaryAmountCustomUserType will multiply the amount by 2
       // ex to simulate a foreign currency change
       Random random = new Random();
@@ -77,6 +84,14 @@ public class SubscriptionApp {
 
    public static void bids () throws Exception {
       Item item = new Item();
+
+      Description description = new Description ();
+      description.setDescription ("Hello description.");
+      item.setDescription (description);
+
+      // this is required to prevent transitive objects, or else
+      // you can set cascade = CascadeType.PERSIST in the annotation
+      Repository.save(description);
 
       // the MonetaryAmountCustomUserType will multiply the amount by 2
       // ex to simulate a foreign currency change

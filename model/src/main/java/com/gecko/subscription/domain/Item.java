@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -88,6 +89,12 @@ public class Item implements Serializable {
    // to the field name on the other side of the relationship
    @OneToMany (mappedBy="item", fetch= FetchType.LAZY)
    protected Set<Bid> bids = new HashSet<> ();
+
+   @OneToOne (fetch = FetchType.LAZY, optional = false)
+   @JoinColumn (name="DESCRIPTION_FK")
+   private Description description;
+
+
 
    public String getId () {
       return id;
@@ -180,5 +187,13 @@ public class Item implements Serializable {
 
       getBids ().add(bid);
       bid.setItem(this);
+   }
+
+   public Description getDescription () {
+      return description;
+   }
+
+   public void setDescription (Description description) {
+      this.description = description;
    }
 }

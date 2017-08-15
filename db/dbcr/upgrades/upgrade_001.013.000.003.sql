@@ -56,7 +56,8 @@ declare
      currency          varchar2(5),
      zipcode           varchar2(10),
      enc_value         varchar2(1000),
-     message_fk        varchar2(50)
+     message_fk        varchar2(50),
+     description_fk    varchar2(50)
   )
   /
 

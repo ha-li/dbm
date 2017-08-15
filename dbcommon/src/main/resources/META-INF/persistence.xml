@@ -8,6 +8,7 @@
         <class>com.gecko.subscription.domain.Message</class>
         <class>com.gecko.subscription.domain.Item</class>
         <class>com.gecko.subscription.domain.Bid</class>
+        <class>com.gecko.subscription.domain.Description</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
 
