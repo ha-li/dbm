@@ -1,15 +1,10 @@
 package com.gecko.subscription.domain;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.io.Serializable;
@@ -17,18 +12,9 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity (name="SUB_BID")
-public class Bid implements Serializable {
+public class Bid extends Identity implements Serializable {
 
    private static final long serialVersionUID = -6002635518885479349L;
-
-   @Id
-   @Column (name="ID")
-   @GeneratedValue (generator = "UUID")
-   @GenericGenerator (
-           name="UUID",
-           strategy = "org.hibernate.id.UUIDGenerator"
-   )
-   private String id;
 
    @Column (name="TEXT")
    private String text;
@@ -50,15 +36,6 @@ public class Bid implements Serializable {
    @ManyToOne(fetch= FetchType.LAZY)
    @JoinColumn (name="ITEM_FK")
    private Item item;
-
-
-   public String getId () {
-      return id;
-   }
-
-   public void setId (String id) {
-      this.id = id;
-   }
 
    public String getText () {
       return text;

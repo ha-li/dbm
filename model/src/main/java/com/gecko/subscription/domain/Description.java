@@ -1,27 +1,13 @@
 package com.gecko.subscription.domain;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity (name="SUB_DESCRIPTION")
-public class Description {
-
-   @Id
-   @Column (name="ID")
-   @GeneratedValue (generator = "UUID")
-   @GenericGenerator (
-           name="UUID",
-           strategy = "org.hibernate.id.UUIDGenerator"
-   )
-   private String id;
+public class Description extends Identity {
 
    @Temporal (TemporalType.TIMESTAMP)
    @Column(name="CREATED_DATE")
@@ -35,15 +21,6 @@ public class Description {
 
    @Column (name="DESCRIPTION")
    private String description;
-
-
-   public String getId () {
-      return id;
-   }
-
-   public void setId (String id) {
-      this.id = id;
-   }
 
    public Date getCreatedDate () {
       return createdDate;

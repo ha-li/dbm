@@ -25,18 +25,10 @@ import java.util.Set;
  * Created by hlieu on 07/30/17.
  */
 @Entity (name="SUB_ITEM")
-public class Item implements Serializable {
+public class Item extends Identity
+        implements Serializable {
 
    private static final long serialVersionUID = -8252943712271485652L;
-
-   @Id
-   @Column (name="ID")
-   @GeneratedValue (generator = "UUID")
-   @GenericGenerator (
-           name="UUID",
-           strategy = "org.hibernate.id.UUIDGenerator"
-   )
-   private String id;
 
    @Column(name="NAME")
    private String name;
@@ -94,15 +86,6 @@ public class Item implements Serializable {
    @JoinColumn (name="DESCRIPTION_FK")
    private Description description;
 
-
-
-   public String getId () {
-      return id;
-   }
-
-   public void setId (String id) {
-      this.id = id;
-   }
 
    public String getName () {
       return name;

@@ -40,17 +40,9 @@ import java.util.Date;
 @org.hibernate.annotations.Cache (
    usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE
 ) */
-public class Message implements Serializable {
+public class Message extends Identity implements Serializable {
 
    private static final long serialVersionUID = 8404396176131219022L;
-
-   @Id @Basic (optional=false)
-   @GeneratedValue (generator = "UUID")
-   @GenericGenerator (
-           name="UUID",
-           strategy = "org.hibernate.id.UUIDGenerator"
-   )
-   private String id;
 
    // there are 3 ways to specify a column is not-nullable
    // 1. @Column (..., nullable=false)
@@ -78,14 +70,6 @@ public class Message implements Serializable {
 
    //@Transient
    private transient String transientText;
-
-   public String getId () {
-      return id;
-   }
-
-   public void setId (String id) {
-      this.id = id;
-   }
 
    public String getText () {
       return text;

@@ -37,7 +37,7 @@
   end;
 
   /
-  create table COR_SYSTEM_PARAMETER (
+  create table SYSTEM_PARAMETER (
      system_parameter_seq varchar2(255) not null,
      category varchar2(100),
      code varchar2(255) not null,
