@@ -21,7 +21,7 @@ import java.util.Random;
  */
 public class SubscriptionApp {
 
-   public static Message messages () throws Exception {
+   public static Message messages () {
       Message message = new Message();
       message.setText ("Ninja fighting machine!");
       message.setType(MessageType.JMS);
@@ -34,13 +34,13 @@ public class SubscriptionApp {
 
       list.get(0).setText("I'm here to rule the world! Booyah");
 
-      return MessageRepository.updateMessage (list.get(0));
+      return Repository.update (list.get(0));
    }
 
    // inserts an item. Item has 2 custom types, a custom composite type
    // MonetaryAmountCustomUserType and
    // SpecialEncryptedCustomUserType
-   public static Item items () throws Exception {
+   public static Item items () {
       Message message = messages ();
       Message savedMessage = Repository.getById(Message.class, message.getId());
 
@@ -69,20 +69,20 @@ public class SubscriptionApp {
       return Repository.save(item);
    }
 
-   public static void getItem (String uuid) throws Exception {
+   public static void getItem (String uuid) {
       Item item = items();
       Item retrievedItem = Repository.getById (Item.class, item.getId ());
       System.out.println (retrievedItem.getBidAmount ().getAmount ());
       System.out.println (retrievedItem.getEncryptedValue ());
    }
 
-   public static void itemsAvg () throws Exception {
+   public static void itemsAvg () {
       Item item = items();
       Item retrieveItem = Repository.getById (Item.class, item.getId());
       System.out.println (retrieveItem.getAuctionTotal ());
    }
 
-   public static void bids () throws Exception {
+   public static void bids () {
       Item item = new Item();
 
       Description description = new Description ();
@@ -120,11 +120,17 @@ public class SubscriptionApp {
       Repository.save (bid);
    }
 
-   public static void main (String[] args) throws Exception {
+   public static void remove (String id) {
+      Item item = Repository.getById (Item.class, "56cad34a-c1ed-4fd6-b85d-0c01acfd86b8");
+      Repository.remove (item);
+   }
 
-      SubscriptionApp.messages ();
-      SubscriptionApp.items ();
-      SubscriptionApp.bids();
+   public static void main (String[] args) {
+
+      //SubscriptionApp.messages ();
+      //SubscriptionApp.items ();
+      //SubscriptionApp.bids();
+      SubscriptionApp.remove ("56cad34a-c1ed-4fd6-b85d-0c01acfd86b8");
       //SubscriptionApp.getItem ("94824201-3f9a-4306-ad46-cf226cf4a42f");
       //SubscriptionApp.itemsAvg ();
    }

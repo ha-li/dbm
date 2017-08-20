@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class MessageRepository implements Repository<Message> {
 
-   public static Message updateMessage (Message message) throws Exception {
+   /* public static Message updateMessage (Message message) throws Exception {
       UserTransaction tx = Application.getUserTransaction ();
       tx.begin();
 
@@ -24,30 +24,38 @@ public class MessageRepository implements Repository<Message> {
 
       tx.commit ();
       return m;
+   } */
+
+   public static List<Message> getMessages () {
+      try {
+         UserTransaction tx = Application.getUserTransaction ();
+         tx.begin ();
+
+         EntityManager em = Application.createEntityManager ();
+         List<Message> list = em.createQuery ("select m from com.gecko.subscription.domain.Message m ").getResultList ();
+
+         tx.commit ();
+         em.close ();
+         return list;
+      } catch (Throwable e) {
+         throw new RuntimeException ("Getting all messages failed.", e);
+      }
    }
 
-   public static List<Message> getMessages () throws Exception {
-      UserTransaction tx = Application.getUserTransaction ();
-      tx.begin ();
+   public static List<Message> getAllMessages () {
+      try {
+         UserTransaction tx = Application.getUserTransaction ();
+         tx.begin ();
 
-      EntityManager em = Application.createEntityManager ();
-      List<Message> list = em.createQuery ("select m from com.gecko.subscription.domain.Message m ").getResultList ();
+         EntityManager em = Application.createEntityManager ();
+         TypedQuery<Message> query = em.createNamedQuery ("findMessageById", Message.class);
+         List<Message> results = query.getResultList ();
 
-      tx.commit ();
-      em.close();
-      return list;
-   }
-
-   public static List<Message> getAllMessages () throws Exception {
-      UserTransaction tx = Application.getUserTransaction();
-      tx.begin();
-
-      EntityManager em = Application.createEntityManager ();
-      TypedQuery<Message> query = em.createNamedQuery("findMessageById", Message.class);
-      List<Message> results = query.getResultList ();
-
-      tx.commit ();
-      return results;
+         tx.commit ();
+         return results;
+      } catch (Throwable t) {
+         throw new RuntimeException ("Get All messages failed.", t);
+      }
    }
 
    /* @Override
