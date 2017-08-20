@@ -3,6 +3,7 @@ package com.gecko.core.application;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceUnitUtil;
 import javax.transaction.UserTransaction;
 
 /**
@@ -13,6 +14,7 @@ public class Application {
    private static EntityManagerFactory EMF;
    private static String persistenceUnit = "ApplicationPU";
 
+
    static {
       try {
          TMS = new TransactionManagerSetup (Database.ORACLE);
@@ -21,6 +23,9 @@ public class Application {
          ex.printStackTrace ();
          throw new ExceptionInInitializerError ("Exception with transaction manager setup object.");
       }
+   }
+   public static PersistenceUnitUtil createPersistenceUnitUtil () {
+      return EMF.getPersistenceUnitUtil ();
    }
 
    public static EntityManager createEntityManager () {
