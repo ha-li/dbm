@@ -1,4 +1,0 @@
-sub_description
-sub_item
-sub_message
-sub_bid
