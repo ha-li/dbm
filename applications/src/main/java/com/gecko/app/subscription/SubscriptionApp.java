@@ -220,10 +220,10 @@ public class SubscriptionApp {
 
    public static void main (String[] args) throws Exception {
 
-      //SubscriptionApp.messages ();
+      SubscriptionApp.messages ();
       // SubscriptionApp.items ();
       //SubscriptionApp.bids();
-      SubscriptionApp.rollbackTest ();
+      //SubscriptionApp.rollbackTest ();
       //SubscriptionApp.remove ("15d5c00e-ffae-4267-a1d3-0f127de95ced");
       //SubscriptionApp.removeById ("c7e03042-16af-4dba-b292-ebebe4ece533");
       //SubscriptionApp.getItem ("94824201-3f9a-4306-ad46-cf226cf4a42f");
