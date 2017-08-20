@@ -5,7 +5,7 @@ import javax.transaction.UserTransaction;
 
 /**
  * An application manageable UserTransaction object.
- * 
+ *
  */
 public class UnitOfWork implements AutoCloseable {
 
@@ -26,11 +26,15 @@ public class UnitOfWork implements AutoCloseable {
 
    public static void rollbackUnitOfWork () {
       try {
-         int status = tx.getStatus ();
-         if (status == Status.STATUS_NO_TRANSACTION) {
-            return;
+         if (tx != null) {
+            int status = tx.getStatus ();
+            if (status == Status.STATUS_NO_TRANSACTION) {
+               tx = null;
+               return;
+            }
+            tx.rollback ();
+            tx = null;
          }
-         tx.rollback ();
       } catch (Exception e) {
          throw new RuntimeException ("UnitOfWork failed to rollback.", e);
       }
@@ -40,6 +44,7 @@ public class UnitOfWork implements AutoCloseable {
       try {
          if (tx != null) {
             tx.commit ();
+            tx = null;
          }
       } catch (Exception e) {
          throw new RuntimeException ("UnitOfWork failed to commit.", e);

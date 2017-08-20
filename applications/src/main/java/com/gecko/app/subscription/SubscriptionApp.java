@@ -183,14 +183,50 @@ public class SubscriptionApp {
       }
    }
 
+   public static void rollbackTest () {
+      Item item = new Item();
+
+      Description description = new Description ();
+      description.setDescription ("This is there.");
+      item.setDescription (description);
+
+      // this is required to prevent transitive objects, or else
+      // you can set cascade = CascadeType.PERSIST in the annotation
+      try (UnitOfWork uow = UnitOfWork.beginUnitOfWork ()) {
+         JpaRepository.save (description);
+         UnitOfWork.commitUnitOfWork ();
+      }
+
+      // the MonetaryAmountCustomUserType will multiply the amount by 2
+      // ex to simulate a foreign currency change
+      Random random = new Random();
+      MonetaryAmount m = new MonetaryAmount ("USD", new BigDecimal (random.nextDouble ()));
+      item.setBidAmount (m);
+      item.setName ("Disappear");
+      item.setAuctionEnd (LocalDateTime.now());
+      item.setSignature ("Death passes by");
+      item.setZipcode (Zipcode.valueOf (String.valueOf(random.nextInt (100000))));
+
+      // SpecialEncryptedCustomUserType will encrypt the string in a "special" way
+      // and decrypt during the nullSafeGet
+      item.setEncryptedValue ("Top Secret");
+
+      // this is required, otherwise you get a unsaved transient instance error
+      try (UnitOfWork uow = UnitOfWork.beginUnitOfWork ()) {
+         JpaRepository.save (item);
+         UnitOfWork.rollbackUnitOfWork ();
+      }
+   }
+
    public static void main (String[] args) throws Exception {
 
       //SubscriptionApp.messages ();
       // SubscriptionApp.items ();
       //SubscriptionApp.bids();
+      SubscriptionApp.rollbackTest ();
       //SubscriptionApp.remove ("15d5c00e-ffae-4267-a1d3-0f127de95ced");
       //SubscriptionApp.removeById ("c7e03042-16af-4dba-b292-ebebe4ece533");
-      SubscriptionApp.getItem ("94824201-3f9a-4306-ad46-cf226cf4a42f");
+      //SubscriptionApp.getItem ("94824201-3f9a-4306-ad46-cf226cf4a42f");
       //SubscriptionApp.itemsAvg ();
    }
 }
