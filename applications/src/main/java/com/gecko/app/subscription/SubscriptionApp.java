@@ -21,7 +21,7 @@ import java.util.Random;
  */
 public class SubscriptionApp {
 
-   public static Message messages () {
+   public static Message messages () throws Exception {
       Message message = new Message();
       message.setText ("Ninja fighting machine!");
       message.setType(MessageType.JMS);
@@ -40,7 +40,7 @@ public class SubscriptionApp {
    // inserts an item. Item has 2 custom types, a custom composite type
    // MonetaryAmountCustomUserType and
    // SpecialEncryptedCustomUserType
-   public static Item items () {
+   public static Item items () throws Exception {
       Message message = messages ();
       Message savedMessage = JpaRepository.getById(Message.class, message.getId());
 
@@ -69,20 +69,20 @@ public class SubscriptionApp {
       return JpaRepository.save(item);
    }
 
-   public static void getItem (String uuid) {
+   public static void getItem (String uuid) throws Exception {
       Item item = items();
       Item retrievedItem = JpaRepository.getById (Item.class, item.getId ());
       System.out.println (retrievedItem.getBidAmount ().getAmount ());
       System.out.println (retrievedItem.getEncryptedValue ());
    }
 
-   public static void itemsAvg () {
+   public static void itemsAvg () throws Exception {
       Item item = items();
       Item retrieveItem = JpaRepository.getById (Item.class, item.getId());
       System.out.println (retrieveItem.getAuctionTotal ());
    }
 
-   public static void bids () {
+   public static void bids () throws Exception {
       Item item = new Item();
 
       Description description = new Description ();
@@ -120,17 +120,22 @@ public class SubscriptionApp {
       JpaRepository.save (bid);
    }
 
-   public static void remove (String id) {
-      Item item = JpaRepository.getById (Item.class, "56cad34a-c1ed-4fd6-b85d-0c01acfd86b8");
+   public static void remove (String id) throws Exception {
+      Item item = JpaRepository.getById (Item.class, id);
       JpaRepository.remove (item);
    }
 
-   public static void main (String[] args) {
+   public static void removeById (String id) throws Exception {
+      JpaRepository.remove (Item.class, id);
+   }
+
+   public static void main (String[] args) throws Exception {
 
       //SubscriptionApp.messages ();
       //SubscriptionApp.items ();
       //SubscriptionApp.bids();
-      SubscriptionApp.remove ("56cad34a-c1ed-4fd6-b85d-0c01acfd86b8");
+      SubscriptionApp.remove ("15d5c00e-ffae-4267-a1d3-0f127de95ced");
+      //SubscriptionApp.removeById ("15d5c00e-ffae-4267-a1d3-0f127de95ced");
       //SubscriptionApp.getItem ("94824201-3f9a-4306-ad46-cf226cf4a42f");
       //SubscriptionApp.itemsAvg ();
    }

@@ -2,9 +2,9 @@ package com.gecko.core.repository;
 
 import com.gecko.core.application.Application;
 import com.gecko.subscription.domain.Identity;
-import com.gecko.subscription.domain.Message;
 
 import javax.persistence.EntityManager;
+import javax.transaction.SystemException;
 import javax.transaction.UserTransaction;
 
 /**
@@ -15,64 +15,74 @@ public interface JpaRepository<T extends Identity>  {
    // T save (T entity) throws Exception;
    // T getById(String id) throws Exception;
 
-   public static <T extends Identity> T save (T entity) {
+   public static <T extends Identity> T save (T entity) throws SystemException {
+      EntityManager em = null;
+      UserTransaction tx = Application.getUserTransaction ();
 
       try {
-         UserTransaction tx = Application.getUserTransaction ();
          tx.begin ();
+         em = Application.createEntityManager ();
 
-         EntityManager em = Application.createEntityManager ();
          em.persist (entity);
-         em.close ();
 
          tx.commit ();
          return entity;
       } catch (Throwable t) {
+         tx.rollback ();
          throw new RuntimeException ("Exception while persisting " + entity.getClass());
+      } finally {
+         em.close ();
       }
    }
 
-   public static <T extends Identity> T getById (final Class<T> t, String id) {
+   public static <T extends Identity> T getById (final Class<T> t, String id) throws SystemException {
+      EntityManager em = null;
+      UserTransaction tx = Application.getUserTransaction ();
       try {
-         UserTransaction tx = Application.getUserTransaction ();
          tx.begin ();
 
-         EntityManager em = Application.createEntityManager ();
+         em = Application.createEntityManager ();
          T item = em.find (t, id);
-         tx.commit ();
-         em.close ();
 
+         tx.commit ();
          return item;
       } catch (Throwable th) {
+         tx.rollback ();
          throw new RuntimeException ("Exception while retrieving id " + id );
-
+      } finally {
+         em.close ();
       }
    }
 
-   public static <T extends Identity> T update (T message) {
+   public static <T extends Identity> T update (T message) throws SystemException {
+      EntityManager em = null;
+      UserTransaction tx = Application.getUserTransaction ();
+
       try {
-         UserTransaction tx = Application.getUserTransaction ();
          tx.begin ();
 
-         EntityManager em = Application.createEntityManager ();
+         em = Application.createEntityManager ();
          T m = em.merge (message);
-         em.close ();
 
          tx.commit ();
          return m;
       } catch (Throwable t) {
+         tx.rollback ();
          throw new RuntimeException ("Exception while updating entity", t);
+      } finally {
+         em.close ();
       }
    }
 
-   public static <T extends Identity> void remove (T t) {
+   public static <T extends Identity> void remove (T t) throws SystemException {
+
+      EntityManager em = null;
+      UserTransaction tx = Application.getUserTransaction ();
       try {
-         UserTransaction tx = Application.getUserTransaction ();
          tx.begin ();
+         em = Application.createEntityManager ();
 
-         EntityManager em = Application.createEntityManager ();
-
-         if ( t != null) {
+         if (t != null) {
             Identity toRemove = em.find (t.getClass (), t.getId ());
 
             if (toRemove != null) {
@@ -80,10 +90,34 @@ public interface JpaRepository<T extends Identity>  {
             }
          }
 
-         em.close ();
          tx.commit ();
       } catch (Throwable th) {
-         throw new RuntimeException ("Exception while removing entity", th);
+         tx.rollback ();
+         throw new RuntimeException ("Exception while removing entity " + t.getClass ().getName () + " with id " + t.getId (), th);
+      } finally {
+         em.close ();
+      }
+   }
+
+   public static <T extends Identity> void remove (final Class<T> t, String id) throws SystemException {
+
+      EntityManager em = null;
+      UserTransaction tx = Application.getUserTransaction ();
+      try {
+         tx.begin ();
+         em = Application.createEntityManager ();
+
+         T item = em.find(t, id);
+         if (item != null) {
+            em.remove(item);
+         }
+
+         tx.commit();
+      } catch (Throwable th)  {
+         tx.rollback ();
+         throw new RuntimeException ("Exception while removeing entity " + t.getName () + " with id " + id);
+      } finally {
+         em.close();
       }
    }
 }
