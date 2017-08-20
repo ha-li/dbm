@@ -1,7 +1,6 @@
 package com.gecko.core.repository;
 
 import com.gecko.core.application.Application;
-import com.gecko.subscription.domain.Item;
 import com.gecko.subscription.domain.Message;
 
 import javax.persistence.EntityManager;
@@ -12,19 +11,7 @@ import java.util.List;
 /**
  * Created by hlieu on 07/31/17.
  */
-public class MessageRepository implements Repository<Message> {
-
-   /* public static Message updateMessage (Message message) throws Exception {
-      UserTransaction tx = Application.getUserTransaction ();
-      tx.begin();
-
-      EntityManager em = Application.createEntityManager ();
-      Message m = em.merge (message);
-      em.close();
-
-      tx.commit ();
-      return m;
-   } */
+public class MessageRepository implements JpaRepository<Message> {
 
    public static List<Message> getMessages () {
       try {

@@ -1,7 +1,7 @@
 package com.gecko.app.subscription;
 
 import com.gecko.core.repository.MessageRepository;
-import com.gecko.core.repository.Repository;
+import com.gecko.core.repository.JpaRepository;
 import com.gecko.subscription.domain.Message;
 import org.junit.After;
 import org.junit.Assert;
@@ -26,7 +26,7 @@ public class SubscriptionAppTest {
       Message message = new Message ();
       message.setText ("Hello World!");
 
-      Repository.save(message);
+      JpaRepository.save(message);
 
       List<Message> list = MessageRepository.getMessages ();
       Assert.assertEquals (list.get(0).getText(), "Hello World!");

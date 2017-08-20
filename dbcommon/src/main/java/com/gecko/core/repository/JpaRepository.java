@@ -10,7 +10,7 @@ import javax.transaction.UserTransaction;
 /**
  * Created by hlieu on 07/31/17.
  */
-public interface Repository<T extends Identity>  {
+public interface JpaRepository<T extends Identity>  {
 
    // T save (T entity) throws Exception;
    // T getById(String id) throws Exception;
@@ -74,7 +74,7 @@ public interface Repository<T extends Identity>  {
 
          if ( t != null) {
             Identity toRemove = em.find (t.getClass (), t.getId ());
-            
+
             if (toRemove != null) {
                em.remove (toRemove);
             }

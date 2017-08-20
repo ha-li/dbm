@@ -1,7 +1,7 @@
 package com.gecko.app.subscription;
 
 import com.gecko.core.repository.MessageRepository;
-import com.gecko.core.repository.Repository;
+import com.gecko.core.repository.JpaRepository;
 import com.gecko.subscription.domain.Bid;
 import com.gecko.subscription.domain.Description;
 import com.gecko.subscription.domain.Item;
@@ -28,13 +28,13 @@ public class SubscriptionApp {
 
       Sender sender = new Sender ("Bob", "Caygeon");
       message.setSender(sender);
-      Repository.save(message);
+      JpaRepository.save(message);
 
       List<Message> list = MessageRepository.getMessages();
 
       list.get(0).setText("I'm here to rule the world! Booyah");
 
-      return Repository.update (list.get(0));
+      return JpaRepository.update (list.get(0));
    }
 
    // inserts an item. Item has 2 custom types, a custom composite type
@@ -42,7 +42,7 @@ public class SubscriptionApp {
    // SpecialEncryptedCustomUserType
    public static Item items () {
       Message message = messages ();
-      Message savedMessage = Repository.getById(Message.class, message.getId());
+      Message savedMessage = JpaRepository.getById(Message.class, message.getId());
 
       Description description = new Description ();
       description.setDescription ("An auctionable item to display in a tank.");
@@ -51,7 +51,7 @@ public class SubscriptionApp {
       item.setMessage (savedMessage);
 
       item.setDescription (description);
-      Repository.save(description);
+      JpaRepository.save(description);
       // the MonetaryAmountCustomUserType will multiply the amount by 2
       // ex to simulate a foreign currency change
       Random random = new Random();
@@ -66,19 +66,19 @@ public class SubscriptionApp {
       // SpecialEncryptedCustomUserType will encrypt the string in a "special" way
       // and decrypt during the nullSafeGet
       item.setEncryptedValue ("DoRaMe");
-      return Repository.save(item);
+      return JpaRepository.save(item);
    }
 
    public static void getItem (String uuid) {
       Item item = items();
-      Item retrievedItem = Repository.getById (Item.class, item.getId ());
+      Item retrievedItem = JpaRepository.getById (Item.class, item.getId ());
       System.out.println (retrievedItem.getBidAmount ().getAmount ());
       System.out.println (retrievedItem.getEncryptedValue ());
    }
 
    public static void itemsAvg () {
       Item item = items();
-      Item retrieveItem = Repository.getById (Item.class, item.getId());
+      Item retrieveItem = JpaRepository.getById (Item.class, item.getId());
       System.out.println (retrieveItem.getAuctionTotal ());
    }
 
@@ -91,7 +91,7 @@ public class SubscriptionApp {
 
       // this is required to prevent transitive objects, or else
       // you can set cascade = CascadeType.PERSIST in the annotation
-      Repository.save(description);
+      JpaRepository.save(description);
 
       // the MonetaryAmountCustomUserType will multiply the amount by 2
       // ex to simulate a foreign currency change
@@ -108,7 +108,7 @@ public class SubscriptionApp {
       item.setEncryptedValue ("FloRayFlowSo");
 
       // this is required, otherwise you get a unsaved transient instance error
-      Repository.save(item);
+      JpaRepository.save(item);
 
       Bid bid = new Bid ();
       bid.setAmount(new BigDecimal (4.00));
@@ -117,12 +117,12 @@ public class SubscriptionApp {
       bid.setItem(item);
 
       item.getBids ().add (bid);
-      Repository.save (bid);
+      JpaRepository.save (bid);
    }
 
    public static void remove (String id) {
-      Item item = Repository.getById (Item.class, "56cad34a-c1ed-4fd6-b85d-0c01acfd86b8");
-      Repository.remove (item);
+      Item item = JpaRepository.getById (Item.class, "56cad34a-c1ed-4fd6-b85d-0c01acfd86b8");
+      JpaRepository.remove (item);
    }
 
    public static void main (String[] args) {
