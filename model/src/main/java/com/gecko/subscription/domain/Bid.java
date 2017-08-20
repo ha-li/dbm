@@ -12,6 +12,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity (name="SUB_BID")
+@org.hibernate.annotations.DynamicUpdate
+@org.hibernate.annotations.DynamicInsert
 public class Bid extends Identity implements Serializable {
 
    private static final long serialVersionUID = -6002635518885479349L;
