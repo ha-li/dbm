@@ -1,8 +1,8 @@
 package com.gecko.app.subscription;
 
 import com.gecko.core.application.UnitOfWork;
-import com.gecko.core.repository.MessageRepository;
 import com.gecko.core.repository.JpaRepository;
+import com.gecko.core.repository.MessageRepository;
 import com.gecko.subscription.domain.Bid;
 import com.gecko.subscription.domain.Description;
 import com.gecko.subscription.domain.Item;
@@ -11,7 +11,6 @@ import com.gecko.subscription.domain.MessageType;
 import com.gecko.subscription.domain.MonetaryAmount;
 import com.gecko.subscription.domain.Sender;
 import com.gecko.subscription.domain.Zipcode;
-import sun.tools.jconsole.Plotter;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -220,8 +219,8 @@ public class SubscriptionApp {
 
    public static void main (String[] args) throws Exception {
 
-      SubscriptionApp.messages ();
-      // SubscriptionApp.items ();
+      //SubscriptionApp.messages ();
+      SubscriptionApp.items ();
       //SubscriptionApp.bids();
       //SubscriptionApp.rollbackTest ();
       //SubscriptionApp.remove ("15d5c00e-ffae-4267-a1d3-0f127de95ced");

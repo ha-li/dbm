@@ -35,6 +35,7 @@ import java.util.Date;
    usage = org.hibernate.annotations.CacheConcurrencyStrategy.READ_WRITE
 ) */
 @org.hibernate.annotations.DynamicUpdate
+@org.hibernate.annotations.Proxy(lazy=true)
 public class Message extends Identity implements Serializable {
 
    private static final long serialVersionUID = 8404396176131219022L;

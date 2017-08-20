@@ -39,4 +39,10 @@ public class RepositoryUtil {
       // em.close ();
       return isDetached;
    }
+
+   public static <T extends Identity> boolean isLoaded (T entity) {
+      PersistenceUnitUtil pu = Application.createPersistenceUnitUtil ();
+
+      return pu.isLoaded(entity);
+   }
 }

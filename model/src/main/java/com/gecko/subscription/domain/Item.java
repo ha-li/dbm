@@ -25,6 +25,7 @@ import java.util.Set;
  * Created by hlieu on 07/30/17.
  */
 @Entity (name="SUB_ITEM")
+@org.hibernate.annotations.Proxy (lazy=true)
 public class Item extends Identity
         implements Serializable {
 
