@@ -29,14 +29,15 @@ public class UnitOfWork implements AutoCloseable {
          if (tx != null) {
             int status = tx.getStatus ();
             if (status == Status.STATUS_NO_TRANSACTION) {
-               tx = null;
+               //tx = null;
                return;
             }
             tx.rollback ();
-            tx = null;
          }
       } catch (Exception e) {
          throw new RuntimeException ("UnitOfWork failed to rollback.", e);
+      } finally {
+         tx = null;
       }
    }
 
@@ -44,10 +45,11 @@ public class UnitOfWork implements AutoCloseable {
       try {
          if (tx != null) {
             tx.commit ();
-            tx = null;
          }
       } catch (Exception e) {
          throw new RuntimeException ("UnitOfWork failed to commit.", e);
+      } finally {
+         tx = null;
       }
    }
 
