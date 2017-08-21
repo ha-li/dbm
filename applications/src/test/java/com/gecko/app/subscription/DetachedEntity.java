@@ -10,6 +10,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import javax.persistence.EntityManager;
+import java.util.HashSet;
+import java.util.Set;
 
 public class DetachedEntity {
 
@@ -134,5 +136,20 @@ public class DetachedEntity {
       // this is still true because they were looked up using the same persistence context
       Assert.assertFalse (retrievedItem == s2ndRetrievedItem );
       Assert.assertFalse ( retrievedItem.equals(s2ndRetrievedItem) );
+
+      // however they still have the same id value because they represent the same
+      // record in the database
+      Assert.assertEquals (retrievedItem.getId(), s2ndRetrievedItem.getId());
+
+      Set<Item> uniqueItems = new HashSet<> ();
+      uniqueItems.add (retrievedItem);
+      uniqueItems.add (s2ndRetrievedItem);
+
+      // Set.add (Object) calls object.equals to prevent duplicates
+      // since Items does not override equals, then item.equals(otherItem)
+      // returns true only when item == otherItem.
+      // since retrievedItem and s2ndRetrievedItem are not ==, then will both
+      // get added to set, so set size is 2
+      Assert.assertEquals (uniqueItems.size () , 2);
    }
 }
