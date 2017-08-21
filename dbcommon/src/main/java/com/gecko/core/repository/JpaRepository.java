@@ -41,7 +41,7 @@ public interface JpaRepository<T extends Identity>  {
       }
    }
 
-   public static <T extends Identity> T update (T message) throws SystemException {
+   public static <T extends Identity> T update (T message) {
       EntityManager em = null;
 
       try {

@@ -7,14 +7,8 @@ import com.gecko.core.repository.RepositoryUtil;
 import com.gecko.subscription.domain.Item;
 import com.gecko.subscription.domain.Message;
 import com.gecko.subscription.domain.Sender;
-import org.hibernate.Session;
-import org.hibernate.jdbc.Work;
-import sun.tools.jconsole.Plotter;
 
 import javax.persistence.EntityManager;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
 
 public class Sample {
    public static void changeState (String id) throws Exception {
