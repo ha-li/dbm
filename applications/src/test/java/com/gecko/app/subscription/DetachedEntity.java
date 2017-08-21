@@ -5,6 +5,7 @@ import com.gecko.core.application.UnitOfWork;
 import com.gecko.core.repository.JpaRepository;
 import com.gecko.core.repository.TestRepositoryUtil;
 import com.gecko.subscription.domain.Item;
+import com.gecko.subscription.domain.Message;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
@@ -141,7 +142,9 @@ public class DetachedEntity {
 
       // this is still true because they were looked up using the same persistence context
       Assert.assertFalse (retrievedItem == s2ndRetrievedItem );
-      Assert.assertFalse ( retrievedItem.equals(s2ndRetrievedItem) );
+
+      // we override the equals so this is true
+      Assert.assertTrue ( retrievedItem.equals(s2ndRetrievedItem) );
 
       // however they still have the same id value because they represent the same
       // record in the database
@@ -152,12 +155,38 @@ public class DetachedEntity {
       uniqueItems.add (s2ndRetrievedItem);
 
       // Set.add (Object) calls object.equals to prevent duplicates
-      // since Items does not override equals, then item.equals(otherItem)
-      // returns true only when item == otherItem.
-      // since retrievedItem and s2ndRetrievedItem are not ==, then will both
-      // get added to set, so set size is 2
-      Assert.assertEquals (uniqueItems.size () , 2);
+      // since we override equals so that the same object
+      // is the same object, so now this set is 1
+      Assert.assertEquals (uniqueItems.size () , 1);
    }
 
+   @Test
+   public void testMessageIdentity () {
+      Message m1 = MessageProvider.getMessage();
 
+      try (UnitOfWork uow = UnitOfWork.beginUnitOfWork ()) {
+         JpaRepository.save (m1);
+         UnitOfWork.commitUnitOfWork ();
+      }
+
+      Message retrieveM1 = JpaRepository.getById (Message.class, m1.getId());
+      Message retrieveM2 = JpaRepository.getById (Message.class, m1.getId());
+
+
+      // since they are from different persistent context, they
+      // have differnet address space, so this is false
+      Assert.assertFalse (retrieveM1 == retrieveM2);
+
+
+      // since Message has change equals to be based on id, this is true
+      Assert.assertTrue (retrieveM1.equals (retrieveM2));
+
+      Set<Message> uniqueSet = new HashSet<>();
+      uniqueSet.add(retrieveM1);
+      uniqueSet.add (retrieveM2);
+
+      // since Set.add tests equals, and inserts only if they are different,
+      // this set is size 1,
+      Assert.assertEquals ( 1, uniqueSet.size());
+   }
 }

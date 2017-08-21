@@ -37,4 +37,22 @@ public class Sender {
    public void setLastName (String lastName) {
       this.lastName = lastName;
    }
+
+   @Override
+   public boolean equals (Object other) {
+      if (other == this) return true;
+      if (other == null) return false;
+
+      if (other instanceof Sender) {
+         Sender otherSender = (Sender) other;
+         return otherSender.getFirstName ().equals (this.getFirstName ())
+                 && otherSender.getLastName ().equals (this.getLastName ());
+      }
+      return false;
+   }
+
+   @Override
+   public int hashCode () {
+      return getFirstName ().hashCode () + getLastName ().hashCode ();
+   }
 }

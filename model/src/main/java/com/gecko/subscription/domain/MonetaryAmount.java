@@ -34,16 +34,22 @@ public class MonetaryAmount {
       this.currency = currency;
    }
 
+   @Override
    public boolean equals (Object o) {
       if (o == this) return true;
+      if (o == null) return false;
 
       if( !(o instanceof MonetaryAmount) ) return false;
 
-      final MonetaryAmount monetaryAmount = (MonetaryAmount) o;
-      if ( this.amount  != monetaryAmount.amount ) return false;
-      if ( ! this.currency.equals(monetaryAmount.currency) ) return false;
+      final MonetaryAmount otherAmount = (MonetaryAmount) o;
 
-      return true;
+      return this.getAmount ().equals (otherAmount.getAmount ())
+              && this.getCurrency ().equals (otherAmount.getCurrency ());
+   }
+
+   @Override
+   public int hashCode () {
+      return amount.hashCode () + currency.hashCode ();
    }
 
    public String toString () {

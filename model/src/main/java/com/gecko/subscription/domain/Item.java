@@ -83,7 +83,7 @@ public class Item extends Identity
    @OneToMany (mappedBy="item", fetch= FetchType.LAZY)
    protected Set<Bid> bids = new HashSet<> ();
 
-   @OneToOne (fetch = FetchType.LAZY, optional = false)
+   @OneToOne (fetch = FetchType.EAGER, optional = false)
    @JoinColumn (name="DESCRIPTION_FK")
    private Description description;
 
@@ -179,5 +179,28 @@ public class Item extends Identity
 
    public void setDescription (Description description) {
       this.description = description;
+   }
+
+   @Override
+   public boolean equals (Object obj) {
+      if (this == obj) return true;
+      if (obj == null) return false;
+      if (obj instanceof Item) {
+         Item otherItem = (Item) obj;
+         return getName().equals(otherItem.getName()) &&
+                 getEncryptedValue ().equals(otherItem.getEncryptedValue ()) &&
+                 getBidAmount ().equals (otherItem.getBidAmount ()) &&
+                 getZipcode ().equals(otherItem.getZipcode()) &&
+                 getMessage ().equals (otherItem.getMessage ()) &&
+                 getDescription ().equals (otherItem.getDescription ());
+      }
+      return false;
+   }
+
+   @Override
+   public int hashCode () {
+      return getName().hashCode () + getEncryptedValue ().hashCode () + getBidAmount ().hashCode ()
+              + getZipcode().hashCode () + getMessage ().hashCode ()
+              + getDescription ().hashCode ();
    }
 }

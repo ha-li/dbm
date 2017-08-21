@@ -13,8 +13,6 @@ public abstract class Zipcode {
 
    protected String value;
 
-   public Zipcode () {}
-
    public Zipcode (String value) {
       this.value = value;
    }
@@ -30,10 +28,11 @@ public abstract class Zipcode {
    @Override
    public boolean equals (Object o) {
       if (this == o) return true;
+      if (o == null) return false;
       if (! (o instanceof Zipcode) ) return false;
 
-      Zipcode zipcode = (Zipcode) o;
-      return value.equals(zipcode.value);
+      Zipcode otherZip = (Zipcode) o;
+      return getValue().equals(otherZip.getValue());
    }
 
    @Override
@@ -43,5 +42,10 @@ public abstract class Zipcode {
 
    public static Zipcode valueOf (String v) {
       return converter.convertToEntityAttribute (v);
+   }
+
+   @Override
+   public int hashCode () {
+      return getValue().hashCode();
    }
 }

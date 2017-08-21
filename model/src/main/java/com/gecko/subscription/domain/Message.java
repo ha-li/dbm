@@ -114,4 +114,24 @@ public class Message extends Identity implements Serializable {
    public void setSender (Sender sender) {
       this.sender = sender;
    }
+
+   @Override
+   public boolean equals (Object obj) {
+      if (this == obj) return true;
+      if (obj == null) return false;
+
+      if (obj instanceof Message) {
+         Message otherMessage = (Message)obj;
+         return this.getId().equals (otherMessage.getId()) &&
+                 getText().equals (otherMessage.getText()) &&
+                 getSender().equals (otherMessage.getSender ()) &&
+                 getType ().equals (otherMessage.getType ());
+      }
+      return false;
+   }
+
+   @Override
+   public int hashCode () {
+      return getText().hashCode() + getSender().hashCode () + getType().hashCode() + getId().hashCode ();
+   }
 }

@@ -45,4 +45,21 @@ public class Description extends Identity {
    public void setDescription (String description) {
       this.description = description;
    }
+
+   @Override
+   public boolean equals (Object obj) {
+      if (obj == this) return true;
+      if (obj == null) return false;
+
+      if (obj instanceof Description) {
+         Description otherD = (Description) obj;
+         return otherD.getDescription ().equals (this.getDescription ());
+      }
+      return false;
+   }
+
+   @Override
+   public int hashCode () {
+      return getDescription ().hashCode ();
+   }
 }
