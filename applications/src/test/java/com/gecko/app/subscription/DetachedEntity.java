@@ -91,6 +91,12 @@ public class DetachedEntity {
       // this is still true because they were looked up using the same persistence context
       Assert.assertTrue (retrievedItem == s2ndRetrievedItem );
       Assert.assertTrue ( retrievedItem.equals(s2ndRetrievedItem) );
+
+      Set<Item> uniqueItems = new HashSet<>();
+      uniqueItems.add(retrievedItem);
+      uniqueItems.add(s2ndRetrievedItem);
+
+      Assert.assertEquals (uniqueItems.size(), 1);
    }
 
    @Test
@@ -152,4 +158,6 @@ public class DetachedEntity {
       // get added to set, so set size is 2
       Assert.assertEquals (uniqueItems.size () , 2);
    }
+
+
 }
