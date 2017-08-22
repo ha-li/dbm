@@ -23,7 +23,8 @@ public class ItemProvider {
       item.setBidAmount (m);
       item.setEncryptedValue ("DoRaMe2");
 
-      item.setZipcode (Zipcode.valueOf (String.valueOf(random.nextInt(100000))));
+      int zipCode = random.nextInt(100000-10000) + 10000;
+      item.setZipcode (Zipcode.valueOf (String.valueOf(zipCode)));
       // item.setMessage(message);
       return item;
    }

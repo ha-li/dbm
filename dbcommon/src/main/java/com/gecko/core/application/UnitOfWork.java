@@ -15,6 +15,11 @@ public class UnitOfWork implements AutoCloseable {
 
    public static UnitOfWork beginUnitOfWork () {
       try {
+         if (tx != null && tx.getStatus () == Status.STATUS_MARKED_ROLLBACK) {
+            tx.rollback ();
+            tx = null;
+         }
+
          UnitOfWork unit = new UnitOfWork ();
          tx = Application.getUserTransaction ();
          tx.begin ();

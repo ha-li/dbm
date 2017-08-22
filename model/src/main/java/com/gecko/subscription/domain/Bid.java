@@ -78,4 +78,23 @@ public class Bid extends Identity implements Serializable {
    public void setItem (Item item) {
       this.item = item;
    }
+
+   @Override
+   public int hashCode () {
+      return getText().hashCode () + getAmount().hashCode () + getItem().hashCode ();
+   }
+
+   @Override
+   public boolean equals (Object obj) {
+      if (this == obj) return true;
+      if (obj == null) return false;
+
+      if (obj instanceof Bid) {
+         Bid obid = (Bid) obj;
+         return getText().equals(obid.getText ()) &&
+            getAmount ().equals (obid.getAmount()) &&
+            getItem ().equals (obid.getItem());
+      }
+      return false;
+   }
 }
