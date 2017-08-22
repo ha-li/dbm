@@ -5,6 +5,7 @@ import com.gecko.subscription.domain.Identity;
 
 import javax.persistence.EntityManager;
 import javax.transaction.SystemException;
+import java.util.List;
 
 /**
  * Created by hlieu on 07/31/17.
@@ -92,6 +93,18 @@ public interface JpaRepository<T extends Identity>  {
          throw new RuntimeException ("Exception while removeing entity " + t.getName () + " with id " + id);
       } finally {
          em.close();
+      }
+   }
+
+   public static <T extends Identity> List<T> findAll(Class<T> t) {
+      EntityManager em = null;
+      try {
+         em = Application.createEntityManager ();
+         List<T> list = em.createQuery ("select a from " + t.getName() + " a").getResultList ();
+         em.close ();
+         return list;
+      } catch (Throwable th) {
+         throw new RuntimeException ("Exception while retrieving all " + t.getName() + ".", th);
       }
    }
 }
