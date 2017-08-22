@@ -5,6 +5,7 @@ import com.gecko.subscription.domain.Identity;
 
 import javax.persistence.EntityManager;
 import javax.transaction.SystemException;
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -96,6 +97,8 @@ public interface JpaRepository<T extends Identity>  {
       }
    }
 
+   // a declarative transaction annotation
+   @Transactional
    public static <T extends Identity> List<T> findAll(Class<T> t) {
       EntityManager em = null;
       try {

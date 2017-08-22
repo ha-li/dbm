@@ -6,6 +6,7 @@ import com.gecko.subscription.domain.MessageType;
 import org.junit.Assert;
 import org.junit.Test;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 public class JpaRepositoryTest {
@@ -27,10 +28,10 @@ public class JpaRepositoryTest {
       }
 
       List<Message> mAll = null;
-      try (UnitOfWork uow = UnitOfWork.beginUnitOfWork ()) {
+      //try (UnitOfWork uow = UnitOfWork.beginUnitOfWork ()) {
          mAll = JpaRepository.findAll (Message.class);
          UnitOfWork.commitUnitOfWork ();
-      }
+      //}
 
       Assert.assertEquals (mAll.size(), count);
    }
