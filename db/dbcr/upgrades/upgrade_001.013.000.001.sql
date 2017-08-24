@@ -14,11 +14,12 @@
 
   /
   create table SUB_PUBLICATION (
-     id varchar2(50) not null,
-     pub_interval varchar2(50) not null,
-     pub_name varchar2(255) not null,
-     publisher_fk varchar2(100) not null,
-     pub_plan_fk varchar2(100)
+     id              varchar2(50) not null,
+     pub_interval    varchar2(50) not null,
+     pub_name        varchar2(255) not null,
+     publisher_fk    varchar2(100) not null,
+     pub_plan_fk     varchar2(100),
+     version         smallint
   )
   /
 
@@ -28,10 +29,10 @@
 
       select count(*) into table_exists
       from "USER_TABLES"
-      where TABLE_NAME = 'COR_SYSTEM_PARAMETER';
+      where TABLE_NAME = 'SYSTEM_PARAMETER';
 
       if table_exists = 1 then
-         execute immediate 'drop table "COR_SYSTEM_PARAMETER" cascade constraints';
+         execute immediate 'drop table "SYSTEM_PARAMETER" cascade constraints';
       end if;
 
   end;
@@ -46,7 +47,7 @@
      creator_id varchar2(50) not null,
      is_encrypted number(1) not null,
      can_cache number(1) default 0,
-     version number(10) not null,
+     version smallint not null,
      volatile number(1) default 0,
      realm_id number (19) default -1
   )

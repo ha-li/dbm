@@ -6,6 +6,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -64,6 +65,9 @@ public class Message extends Identity implements Serializable {
 
    private Sender sender;
 
+   @Version
+   private short version;
+
    //@Transient
    private transient String transientText;
 
@@ -113,6 +117,10 @@ public class Message extends Identity implements Serializable {
 
    public void setSender (Sender sender) {
       this.sender = sender;
+   }
+
+   public short getVersion () {
+      return version;
    }
 
    @Override

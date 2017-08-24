@@ -21,7 +21,8 @@ declare
      created_date      timestamp,
      type              varchar2(20),
      sender_first      varchar2(50),
-     sender_last       varchar2(50)
+     sender_last       varchar2(50),
+     version           smallint
   )
   /
 
@@ -57,7 +58,8 @@ declare
      zipcode           varchar2(10),
      enc_value         varchar2(1000),
      message_fk        varchar2(50),
-     description_fk    varchar2(50)
+     description_fk    varchar2(50),
+     version           smallint
   )
   /
 

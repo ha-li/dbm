@@ -19,7 +19,8 @@ declare
      modified_date     timestamp,
      created_date      timestamp,
      amount            varchar2(50),
-     item_fk           varchar2(50)
+     item_fk           varchar2(50),
+     version           smallint
   )
   /
 

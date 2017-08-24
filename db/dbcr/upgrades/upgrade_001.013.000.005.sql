@@ -17,7 +17,8 @@ declare
      id                varchar2(50) not null,
      modified_date     timestamp,
      created_date      timestamp,
-     description       varchar2(50)
+     description       varchar2(50),
+     version           smallint
   )
   /
 

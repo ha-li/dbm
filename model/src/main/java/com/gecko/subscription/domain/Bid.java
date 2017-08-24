@@ -7,6 +7,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -38,6 +39,9 @@ public class Bid extends Identity implements Serializable {
    @ManyToOne(fetch= FetchType.LAZY)
    @JoinColumn (name="ITEM_FK")
    private Item item;
+
+   @Version
+   private short version;
 
    public String getText () {
       return text;
@@ -77,6 +81,10 @@ public class Bid extends Identity implements Serializable {
 
    public void setItem (Item item) {
       this.item = item;
+   }
+
+   public short getVersion () {
+      return version;
    }
 
    @Override

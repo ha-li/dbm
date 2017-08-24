@@ -14,10 +14,11 @@
 
   /
   create table SUB_PAYMENT_PLAN (
-     id varchar2(50) not null,
-     pay_interval varchar2(50) not null,
-     amount number(10,2) not null,
-     discount_plan_fk varchar2(100) not null
+     id                    varchar2(50) not null,
+     pay_interval          varchar2(50) not null,
+     amount                number(10,2) not null,
+     discount_plan_fk      varchar2(100) not null,
+     version               smallint
   )
   /
 
@@ -38,10 +39,11 @@ declare
 
   /
   create table SUB_DISCOUNT (
-     id varchar2(50) not null,
-     discount_frequency varchar2(50) not null,
-     amount number(10,2),
-     percent number(10,2)
+     id                    varchar2(50) not null,
+     discount_frequency    varchar2(50) not null,
+     amount                number(10,2),
+     percent               number(10,2),
+     version               smallint
   )
   /
   commit

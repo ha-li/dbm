@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
+import javax.persistence.Version;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -86,6 +87,9 @@ public class Item extends Identity
    @OneToOne (fetch = FetchType.EAGER, optional = false)
    @JoinColumn (name="DESCRIPTION_FK")
    private Description description;
+
+   @Version
+   private short version;
 
 
    public String getName () {
@@ -159,6 +163,10 @@ public class Item extends Identity
 
    public void setBids (Set<Bid> bids) {
       this.bids = bids;
+   }
+
+   public short getVersion () {
+      return version;
    }
 
    public void add (Bid bid) {

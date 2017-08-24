@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Version;
 import java.util.Date;
 
 @Entity (name="SUB_DESCRIPTION")
@@ -21,6 +22,9 @@ public class Description extends Identity {
 
    @Column (name="DESCRIPTION")
    private String description;
+
+   @Version
+   private short version;
 
    public Date getCreatedDate () {
       return createdDate;
@@ -44,6 +48,10 @@ public class Description extends Identity {
 
    public void setDescription (String description) {
       this.description = description;
+   }
+
+   public short getVersion () {
+      return version;
    }
 
    @Override
